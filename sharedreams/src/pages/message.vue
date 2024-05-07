@@ -8,6 +8,6 @@
         <h1 class="font-bold">Ecrivez, partagez, réagissez !</h1>
       </div>
       <p>Sharedreams vous permet de tenir un carnet de rêves partageable avec vos amis. Likez leurs posts et commentez !</p>
-      <button class="bg-orange-400 ">Suivant</button>
+      <button class="bg-orange-400">Suivant</button>
   </div>
 </template>
