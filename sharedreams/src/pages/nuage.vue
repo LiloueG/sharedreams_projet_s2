@@ -9,6 +9,8 @@
         <p class="font-medium"> l’endroit où tous vos rêves s’expriment</p>
       </div>
       <p>L’application parfaite pour partager vos rêves avec tous vos amis !</p>
-      <button class="bg-orange-400 w-full rounded-lg py-3 font-Marigny font-medium text-2xl mt-5">C'est parti</button>
+      <RouterLink to="/message">
+        <button class="bg-orange-400 w-full rounded-lg py-3 font-Marigny font-medium text-2xl mt-5">C'est parti</button>
+      </RouterLink>
   </div>
 </template>
