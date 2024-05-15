@@ -1,23 +1,38 @@
 <script setup lang="ts">
 import {ref} from 'vue'
-import PocketBase from 'pocketbase';
+import { Adduser } from '@/assets/backend';
+import { useRouter } from 'vue-router'
 
-// const pb = new PocketBase('http://127.0.0.1:8090');
+const router = useRouter()
 
-// const data = {
-//     "username": "",
-//     "email": "",
-//     "password": "",
-//     "passwordConfirm": ""
-// };
+const polconfident = ref(false);
 
-// // const record = await pb.collection('users').create(data);
-// // await pb.collection('users').requestVerification('');
 
-// const pseudo = ref('')
-// const email = ref('')
-// const password = ref('')
-// const confirmPassword = ref('')
+const data = ref({
+    username: "",
+    email: "",
+    password: "",
+    passwordConfirm: "",
+    mail: false,
+});
+
+
+const handleValidation = async () => {
+    if (data.value.username === "" || data.value.email === "" || data.value.password === "" || data.value.passwordConfirm === "") {
+        console.log("Veuillez remplir tous les champs");
+    } else {
+        if (polconfident.value === true) {
+            if (data.value.password === data.value.passwordConfirm) {
+                Adduser(data.value);
+                router.push('/accueil');
+            } else {
+                console.log("Les mots de passe ne correspondent pas");
+            }
+        } else {
+            console.log("Veuillez accepter la politique de confidentialité");
+        }
+    }
+}
 
 </script>
 
@@ -29,26 +44,26 @@ import PocketBase from 'pocketbase';
             </h1>
             <div class="flex justify-center gap-4">
                 <RouterLink to="/inscription">
-                    <button class="bg-orange-400 border-2 border-orange-400 px-8 py-3 rounded-full font-Marigny font-bold text-">Inscription</button>
+                    <button class="bg-orange-400 border-2 border-orange-400 px-8 py-2 rounded-full font-Marigny font-bold text-">Inscription</button>
                 </RouterLink>
                 <RouterLink to="/connexion">
-                    <button class="border-2 border-white px-8 py-3 rounded-full font-Marigny font-bold">Connexion</button>
+                    <button class="border-2 border-white px-8 py-2 rounded-full font-Marigny font-bold">Connexion</button>
                 </RouterLink>
             </div>
         </div>
-        <div class="container mx-auto">
-        <form class="max-w-md mx-auto">
-            <div class="mb-5">
-                <input type="text" id="name" v-model="pseudo" class="w-full px-4 py-2 border-white border-4 rounded-md bg-slate-200 opacity-50" style="color: white" placeholder="Pseudo" />
+        <div class="container mx-auto mt-2">
+        <form class="max-w-md mx-auto text-white">
+            <div class="mb-5 ">
+                <input type="text" id="name" v-model="data.username" class="w-full font-light placeholder:text-white px-4 py-2 border-white border-2 rounded-md bg-slate-200/50 " placeholder="Pseudo" />
             </div>
             <div class="mb-5">
-                <input type="email" id="email" v-model="email" class="w-full px-4 py-2 border-white border-4 bg-slate-200 opacity-50 rounded-md" placeholder="Email" />
+                <input type="email" id="email" v-model="data.email" class="w-full font-light placeholder:text-white px-4 py-2 border-white border-2 bg-slate-200/50 rounded-md" placeholder="Email" />
             </div>
             <div class="mb-5">
-                <input type="password" id="password" v-model="password" class="w-full px-4 py-2 border-white border-4 bg-slate-200 opacity-50 rounded-md" placeholder="Mot de passe"/>
+                <input type="password" id="password" v-model="data.password" class="w-full placeholder:text-white font-light px-4 py-2 border-white border-2 bg-slate-200/50 rounded-md" placeholder="Mot de passe"/>
             </div>
             <div class="mb-5">
-                <input type="password" id="confirmPassword" v-model="confirmPassword" class="w-full px-4 py-2 border-white border-4 bg-slate-200 opacity-50 rounded-md" placeholder="Confirmer le mot de passe"/>
+                <input type="password" id="confirmPassword" v-model="data.passwordConfirm" class="w-full font-light placeholder:text-white px-4 py-2 border-white border-2 bg-slate-200/50 rounded-md" placeholder="Confirmer le mot de passe"/>
             </div>
             <div class="flex gap-12">
             <label class="mb-4">
@@ -57,12 +72,12 @@ import PocketBase from 'pocketbase';
                     <span class="text-xs">J’approuve la politique de confidentialité ShareDreams</span>
                 </label>
                 <label for="sendmail" class="flex items-center text-gray-400 mt-2">
-                    <input type="checkbox" id="sendmail" v-model="sendmail" class="appearance-none mr-2 w-5 h-4 border-2 border-gray-300 rounded-sm bg-none checked:bg-blue-500" />
+                    <input type="checkbox" id="sendmail" v-model="data.mail" class="appearance-none mr-2 w-5 h-4 border-2 border-gray-300 rounded-sm bg-none checked:bg-blue-500" />
                     <span class="text-xs">J’accepte de recevoir des e-mails promotionnels et informatifs de la part de ShareDreams</span>
                 </label>
             </label>
             </div>
-            <button type="submit" class="bg-orange-400 w-full rounded-full py-3 font-Marigny font-medium text-2xl mt-3">C'est parti !</button>
+            <button @click="handleValidation()" class="bg-orange-400 w-full rounded-full py-3 font-Marigny font-medium text-2xl mt-3">C'est parti !</button>
         </form>
     </div>
     <div class="flex justify-center items-center gap-2">

@@ -15,7 +15,7 @@
               <span class="h-2 w-[25%] rounded-full bg-white"></span>
           </div>
           <RouterLink to="/sommeil">
-            <button class="bg-orange-400 px-7 py-3 pb-2 rounded-full justify-items-stretch !important font-Marigny text-2xl font-medium">
+            <button class="bg-orange-400 px-7 py-3 pb-2 rounded-full justify-items-stretch font-Marigny text-2xl font-medium">
                 Suivant
             </button>
           </RouterLink>

@@ -7,6 +7,8 @@
 
 body {
   background: linear-gradient(to bottom, #0c0a09 0%, #4c1d95 35.5%, #7c3aed 64%, #a78bfa 100%);
+  background-attachment: fixed;
+  inset: 0;
   @apply text-white;
   font-family: 'Poppins', sans-serif;
 }
