@@ -23,7 +23,7 @@ export async function logIn(event: Object) {
     }
 }
 
-export async function getuser(event: Object) {
+export async function getuser(event: string) {
     try {
         const record = await pb.collection('users').getOne(event);
         return record;
@@ -32,3 +32,20 @@ export async function getuser(event: Object) {
     }
 }
 
+export async function createDream(event: Object) {
+    try {
+        const record = await pb.collection('dreams').create(event);
+        return record;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function getDreams() {
+    try {
+        const record = await pb.collection('dreams').getFullList(1, { perPage: 10, sort: '-created'});
+        return record;
+    } catch (error) {
+        return error;
+    }
+}

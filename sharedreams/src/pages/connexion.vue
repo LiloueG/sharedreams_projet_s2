@@ -56,7 +56,9 @@ const handleValidation = async () => {
                 </label>
                 <a class="text-xs hover:underline-offset-4" href="">Mot de passe oublié ?</a>
             </div>
-            <div @click="handleValidation()" class="bg-orange-400 w-full text-center rounded-full py-3 font-Marigny font-medium text-2xl mt-3 ">C'est parti !</div>
+            <RouterLink to="/accueil">
+                <div @click="handleValidation()" class="bg-orange-400 w-full text-center rounded-full py-3 font-Marigny font-medium text-2xl mt-3 ">C'est parti !</div>
+            </RouterLink>
         </form>
     </div>
     <div class="flex justify-center items-center gap-2">

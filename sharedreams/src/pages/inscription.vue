@@ -77,7 +77,9 @@ const handleValidation = async () => {
                 </label>
             </label>
             </div>
-            <button @click="handleValidation()" class="bg-orange-400 w-full rounded-full py-3 font-Marigny font-medium text-2xl mt-3">C'est parti !</button>
+            <RouterLink to="/accueil">
+                <button @click="handleValidation()" class="bg-orange-400 w-full rounded-full py-3 font-Marigny font-medium text-2xl mt-3">C'est parti !</button>
+            </RouterLink>
         </form>
     </div>
     <div class="flex justify-center items-center gap-2">
