@@ -58,20 +58,24 @@ function convertirEnTempsEcoulé(heureDonnée) {
     }
 }
 
-const username = ref('')
+//const username = ref('')
 
 async function getUser() {
     const user = await pb.collection('users').getOne(props.user)
+   // console.log (user.username);
     return user.username
 }
-
-
+// const username = await getUser();
+//     console.log(username);
 
 onMounted(() => {
-    getUser()
+    // const username = await getUser();
+    // console.log(username);
+    // const username = getUser();
+    // console.log(username);
+    
 })
-
-console.log(username.value)
+//console.log(getUser())
 
 </script>
 
@@ -80,10 +84,11 @@ console.log(username.value)
         <div class="flex justify-between items-center">
             <div class="flex gap-3 items-center">
                 <img :src="img_profil" alt="image de profil">
-                <p class="font-Marigny font-bold text-xl">{{ user }}</p>
+                <p class="font-Marigny font-bold text-xl">{{ username }}</p>
             </div>
             <p class="text-xs">{{ convertirEnTempsEcoulé(created) }}</p>
         </div>
+        <p>{{ dreamnight }}</p>
         <p>{{ dream }}</p>
         <div class="flex gap-4">
             <like />

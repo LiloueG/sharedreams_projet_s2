@@ -52,6 +52,6 @@ const handleValidation = async () => {
                 <textarea type="text" id="name" v-model="dream" class="w-full h-64 font-light placeholder:text-white px-4 py-2 border-white border-2 rounded-md bg-slate-200/50 " placeholder="Ecrivez votre message" />
             </div>
         </form>
-        <button @click="handleValidation()" class="bg-orange-400 border-2 border-orange-400 px-8 py-2 rounded-full font-Marigny font-semibold absolute bottom-32 right-4">Publier</button>
+        <button @click="handleValidation()" class="bg-orange-400 border-2 border-orange-400 px-8 py-2 rounded-full font-Marigny font-semibold bottom-32 ">Publier</button>
     </main>
 </template>
