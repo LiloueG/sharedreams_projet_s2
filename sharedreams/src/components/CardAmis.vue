@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import Trash from '@/components/icons/Trash.vue'
 import img_profil from '../assets/image/img_profil.png'
-// import { pb } from '@/assets/backend';
+import { pb } from '@/assets/backend';
 
+const list_amis = await pb.collection('friend').getFullList()
+console.log(list_amis)
 
 </script>
 

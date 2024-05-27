@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import img_profil from '../assets/image/img_profil.png'
-import { pb } from '@/assets/backend'
+import {pb } from '@/assets/backend'
+import type { userRecord } from '@/assets/pocket-types'
 
+const user = await pb.collection('users').getOne(pb.authStore.model.id)
+const profil = await pb.collection('users').getFullList()
+console.log(profil)
 </script>
 
 <template>
@@ -13,11 +17,9 @@ import { pb } from '@/assets/backend'
                 <p class="font-Marigny font-medium">Rêves publiés</p>
             </div>
         </div>
-        <p class="font-bold font-Marigny text-xl">Liloue</p>
+        <p class="font-bold font-Marigny text-xl">{{ user.username }}</p>
     </div>
-    <p class="text-xs">🎨🔮 Graphiste freelance le jour, exploratrice des rêves la nuit!🔍💭 
-        📝 Rejoignez-moi dans mes aventures nocturnes et découvrez les secrets de l'inconscient! 🚀🌠
-        ✨🔍 Partagez vos rêves, décodez leurs mystères et libérez votre imagination! 🌈💫
+    <p class="text-xs">{{ user.biography}}
     </p>
     <div class="flex justify-center gap-6 py-7">
         <button class="font-Marigny font-bold text-xs border-2 border-white rounded-3xl py-2 px-4">Modifier le profil</button>

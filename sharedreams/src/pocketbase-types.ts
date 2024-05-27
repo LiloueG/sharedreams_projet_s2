@@ -55,11 +55,12 @@ export type DreamsRecord = {
 }
 
 export type FriendRecord = {
-	profil?: RecordIdString
+	users_friend?: RecordIdString[]
 }
 
 export type UsersRecord = {
 	avatar?: string
+	biography?: string
 	friend?: RecordIdString[]
 	mail?: boolean
 }
