@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase';
 import { useRouter } from 'vue-router'
-export const pb = new PocketBase('https://sharedreams.lguyot.fr:443');
+export const pb = new PocketBase('http://127.0.0.1:8090');
 
 const router = useRouter
 
@@ -74,3 +74,23 @@ export async function logout() {
       throw error;
     }
   }
+
+  export default {
+    name: 'counterLike',
+    data(){
+        return {
+            counter: 0
+        }
+    }
+}
+
+export async function getImg() {
+    try {
+        const record = await pb.collection('img').getFullList(1, { perPage: 10, sort: '-created', expand: 'user'});
+        console.log(record);
+        
+        return record;
+    } catch (error) {
+        return error;
+    }
+}

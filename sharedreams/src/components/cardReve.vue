@@ -5,6 +5,7 @@ import type { DreamsResponse } from '@/pocketbase-types'
 import { defineProps } from 'vue'
 import Img from '@/components/Img.vue'
 import { ref } from 'vue'
+import { getImg } from '@/assets/backend'
 
 
 const props = defineProps<DreamsResponse>()
@@ -59,6 +60,16 @@ function convertirEnTempsEcoulé(heureDonnée) {
 }
 
 const love = ref(false)
+const loveCount = ref(0)
+
+function toggleLove() {
+    love.value = !love.value
+    if (love.value) {
+        loveCount.value++
+    } else {
+        loveCount.value--
+    }
+}
 
 </script>
 
@@ -66,7 +77,7 @@ const love = ref(false)
     <div class="bg-white/20 rounded-xl p-4 flex flex-col gap-3">
         <div class="flex justify-between items-center">
             <div class="flex gap-3 items-center">
-                <Img :record="props" :filename="expand.user.avatar" class="w-9 h-9 rounded-full"/>
+                <Img :record="props" :filename="expand.user.avatar" class="w-9 h-9 rounded-full"/> 
                 <p class="font-Marigny font-bold text-xl">{{ expand.user.username}}</p>
             </div>
             <p class="text-xs">{{ convertirEnTempsEcoulé(created) }}</p>
@@ -74,7 +85,8 @@ const love = ref(false)
         <p>{{ dreamnight }}</p>
         <p>{{ dream }}</p>
         <div class="flex gap-4">
-            <like @click="love = !love" :className="love ? 'text-red-600' : 'text-gray-600'" />
+            <like @click="toggleLove" :className="love ? 'text-red-600' : 'text-white'" />
+            <span class="text-white">{{ loveCount }}</span>
             <commentaire />
         </div>
     </div>

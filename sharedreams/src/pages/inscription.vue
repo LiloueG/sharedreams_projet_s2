@@ -2,6 +2,7 @@
 import {ref} from 'vue'
 import { Adduser } from '@/assets/backend';
 import { useRouter } from 'vue-router'
+import { pb } from '@/assets/backend';
 
 const router = useRouter()
 
@@ -34,8 +35,12 @@ const handleValidation = async () => {
         }
     }
 }
-
-
+const currentuser = ref()
+const doLoginOauth = async () => {
+  const authData = await pb.collection('users').authWithOAuth2({ provider: 'google' });
+  currentuser.value = pb.authStore.model
+  location.reload()
+}
 
 </script>
 
@@ -91,7 +96,7 @@ const handleValidation = async () => {
         <span class="h-0.5 w-[25%] rounded bg-gradient-to-r from-black"></span>
     </div>
     <div class="flex justify-center gap-5 drop-shadow-lg">
-        <img class="size-14" src="@/assets/image/google.svg" alt="connexion par google">
+        <img @click="doLoginOauth" class="size-14" src="@/assets/image/google.svg" alt="connexion par google">
         <img class="size-14" src="@/assets/image/facebook.svg" alt="connexion par facebook">
     </div>
     </div>

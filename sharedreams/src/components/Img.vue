@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { pb } from '../assets/backend.ts'
+import {pb } from '@/assets/backend'
 import { type RecordModel } from 'pocketbase'
 
 const props = defineProps<{
@@ -18,8 +18,8 @@ const props = defineProps<{
 }>()
 
 
-const src = pb.getFileUrl(props.record.expand.user, props.record.expand.user.avatar, {'thumb': '100x250'});
-console.log(props.record.expand.user)
+const src = pb.files.getUrl(props.record.expand.user, props.record.expand.user.avatar, {'thumb': '100x250'});
+console.log(src)
 
 </script>
 <template>

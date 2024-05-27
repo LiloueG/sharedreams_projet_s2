@@ -13,7 +13,7 @@ import verified from '@/components/icons/verified_vsetesajour.vue'
 const dreams: dreamRecord[] = await getDreams()
 
 const user = await pb.collection('users').getOne(pb.authStore.model.id)
-
+console.log(dreams)
 
 </script>
 
