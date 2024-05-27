@@ -10,7 +10,9 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "typegen": "pocketbase-typegen --db ../pb_data/data.db --out ./src/pocketbase-types.ts"
+
   },
   "dependencies": {
     "vue": "^3.4.21",
@@ -36,6 +38,7 @@
     "vite": "^5.2.8",
     "vite-plugin-pages": "^0.32.1",
     "vite-plugin-vue-devtools": "^7.0.25",
-    "vue-tsc": "^2.0.11"
+    "vue-tsc": "^2.0.11",
+    "pocketbase-typegen": "^1.2.1"
   }
 }

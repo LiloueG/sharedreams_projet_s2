@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router';
 import { pb } from '@/assets/backend'
 import { useRouter } from 'vue-router'
+import { logout } from '@/assets/backend';
 
 
 const router = useRouter()
@@ -15,10 +16,11 @@ else {
   router.push('/accueil')
 }
 
+
 </script>
 
 <template>
-  <!-- <button @click="pb.authStore.clear">LOGOUT</button> -->
+  <button @click="logout()">LOGOUT</button>
   <Suspense>
     <RouterView />
   </Suspense>

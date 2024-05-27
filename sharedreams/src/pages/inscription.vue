@@ -25,6 +25,7 @@ const handleValidation = async () => {
             if (data.value.password === data.value.passwordConfirm) {
                 Adduser(data.value);
                 router.push('/accueil');
+                console.log(data.value)
             } else {
                 console.log("Les mots de passe ne correspondent pas");
             }
@@ -33,6 +34,8 @@ const handleValidation = async () => {
         }
     }
 }
+
+
 
 </script>
 

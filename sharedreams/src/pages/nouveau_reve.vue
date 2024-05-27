@@ -28,11 +28,11 @@ const handleValidation = async () => {
 
 <template>
     <main class="px-4 py-12 min-h-screen">
-        <div class="flex gap-3">
+        <div class="flex gap-3 items-center">
             <RouterLink to="/accueil">
-                <retour />
+                <retour class="w-5 h-5"/>
             </RouterLink>
-            <h1 class="font-Marigny text-2xl font-bold">Ecrivez votre nouveau rêve !</h1>
+            <h1 class="font-Marigny text-2xl font-bold">Ecrivez votre rêve !</h1>
         </div>
         
         <div class="flex justify-center gap-4 mt-12">
@@ -52,6 +52,8 @@ const handleValidation = async () => {
                 <textarea type="text" id="name" v-model="dream" class="w-full h-64 font-light placeholder:text-white px-4 py-2 border-white border-2 rounded-md bg-slate-200/50 " placeholder="Ecrivez votre message" />
             </div>
         </form>
-        <button @click="handleValidation()" class="bg-orange-400 border-2 border-orange-400 px-8 py-2 rounded-full font-Marigny font-semibold bottom-32 ">Publier</button>
+        <div class="flex justify-end mt-2">
+            <button @click="handleValidation()" class="bg-orange-400 border-2 border-orange-400 px-8 py-2 rounded-full font-Marigny font-semibold self-end ">Publier</button>
+        </div>
     </main>
 </template>

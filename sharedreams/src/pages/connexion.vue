@@ -17,7 +17,7 @@ const handleValidation = async () => {
     if (data.value.email === "" || data.value.password === "") {
         console.log("Veuillez remplir tous les champs");
     } else {
-        logIn(data.value);
+        await logIn(data.value);
         router.push('/accueil');
     }
 }

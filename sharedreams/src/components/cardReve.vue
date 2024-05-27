@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import img_profil from '@/assets/image/img_profil.png'
 import like from '@/components/icons/like.vue'
 import commentaire from '@/components/icons/commentaire.vue'
-import type { dreamRecord } from '@/assets/pocket-types'
+import type { DreamsResponse } from '@/pocketbase-types'
 import { defineProps } from 'vue'
-import { pb } from '@/assets/backend'
-import { ref, onMounted } from 'vue'
+import Img from '@/components/Img.vue'
+import { ref } from 'vue'
 
-const props = defineProps<dreamRecord>()
+
+const props = defineProps<DreamsResponse>()
 
 
 function convertirEnTempsEcoulé(heureDonnée) {
@@ -58,24 +58,7 @@ function convertirEnTempsEcoulé(heureDonnée) {
     }
 }
 
-//const username = ref('')
-
-async function getUser() {
-    const user = await pb.collection('users').getOne(props.user)
-   // console.log (user.username);
-    return user.username
-}
-// const username = await getUser();
-//     console.log(username);
-
-onMounted(() => {
-    // const username = await getUser();
-    // console.log(username);
-    // const username = getUser();
-    // console.log(username);
-    
-})
-//console.log(getUser())
+const love = ref(false)
 
 </script>
 
@@ -83,15 +66,15 @@ onMounted(() => {
     <div class="bg-white/20 rounded-xl p-4 flex flex-col gap-3">
         <div class="flex justify-between items-center">
             <div class="flex gap-3 items-center">
-                <img :src="img_profil" alt="image de profil">
-                <p class="font-Marigny font-bold text-xl">{{ username }}</p>
+                <Img :record="props" :filename="expand.user.avatar" class="w-9 h-9 rounded-full"/>
+                <p class="font-Marigny font-bold text-xl">{{ expand.user.username}}</p>
             </div>
             <p class="text-xs">{{ convertirEnTempsEcoulé(created) }}</p>
         </div>
         <p>{{ dreamnight }}</p>
         <p>{{ dream }}</p>
         <div class="flex gap-4">
-            <like />
+            <like @click="love = !love" :className="love ? 'text-red-600' : 'text-gray-600'" />
             <commentaire />
         </div>
     </div>
