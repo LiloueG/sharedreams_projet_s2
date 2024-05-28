@@ -1,6 +1,7 @@
+import type { TypedPocketBase } from '@/pocketbase-types';
 import PocketBase from 'pocketbase';
 import { useRouter } from 'vue-router'
-export const pb = new PocketBase('http://127.0.0.1:8090');
+export const pb = new PocketBase('http://127.0.0.1:8090') as TypedPocketBase;
 
 const router = useRouter
 
@@ -64,9 +65,8 @@ export async function logout() {
 
   export async function getDreamsforProfil() {
     try {
-        const user = await pb.collection('users').getOne(pb.authStore.model.id); // Obtenez l'ID de l'utilisateur connecté
         const records = await pb.collection('dreams').getFullList({
-        filter: `user = '${user}'`, // Filtrer les rêves par l'ID de l'utilisateur connecté
+        filter: `user = '${pb.authStore.model!.id}'`, // Filtrer les rêves par l'ID de l'utilisateur connecté
       });
       return records;
     } catch (error) {
@@ -92,5 +92,15 @@ export async function getImg() {
         return record;
     } catch (error) {
         return error;
+    }
+}
+
+export async function getFriendCount() {
+    try {
+        const user = await pb.collection('users').getOne(pb.authStore.model!.id); // Get the logged-in user
+        return user.user_friend.length;
+    } catch (error) {
+        console.error("Error while retrieving friends:", error);
+        throw error;
     }
 }

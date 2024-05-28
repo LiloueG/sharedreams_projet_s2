@@ -4,11 +4,10 @@ import barre from '@/components/barre.vue';
 import cardReve from '@/components/cardReve.vue';
 import setting from '@/components/icons/setting.vue';
 import { getDreamsforProfil } from '@/assets/backend';
-import type { dreamRecord } from '@/assets/pocket-types';
 
+const dreamspublish = await getDreamsforProfil()
 
-const dreams: dreamRecord[] = await getDreamsforProfil()
-
+console.log(dreamspublish)
 </script>
 
 <template>
@@ -20,7 +19,7 @@ const dreams: dreamRecord[] = await getDreamsforProfil()
         </div>
         <CardProfil />
         <div class="flex flex-col gap-5">
-            <cardReve v-for="dream in dreams" :key="dream.user" v-bind="dream" />
+            <cardReve v-for="dream in dreamspublish" :key="dream.user" v-bind="dream" />
         </div>
     </main>
 </template>

@@ -3,9 +3,9 @@ import like from '@/components/icons/like.vue'
 import commentaire from '@/components/icons/commentaire.vue'
 import type { DreamsResponse } from '@/pocketbase-types'
 import { defineProps } from 'vue'
-import Img from '@/components/Img.vue'
+import Img from '@/components/ImgCardReve.vue'
 import { ref } from 'vue'
-import { getImg } from '@/assets/backend'
+
 
 
 const props = defineProps<DreamsResponse>()
@@ -85,8 +85,10 @@ function toggleLove() {
         <p>{{ dreamnight }}</p>
         <p>{{ dream }}</p>
         <div class="flex gap-4">
-            <like @click="toggleLove" :className="love ? 'text-red-600' : 'text-white'" />
-            <span class="text-white">{{ loveCount }}</span>
+            <div class="flex gap-2">
+                <like @click="toggleLove" :className="love ? 'text-red-600' : 'text-white'" />
+                <span class="text-white">{{ loveCount }}</span>
+            </div>
             <commentaire />
         </div>
     </div>
