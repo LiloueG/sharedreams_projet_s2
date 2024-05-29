@@ -66,7 +66,9 @@ export async function logout() {
   export async function getDreamsforProfil() {
     try {
         const records = await pb.collection('dreams').getFullList({
-        filter: `user = '${pb.authStore.model!.id}'`, // Filtrer les rêves par l'ID de l'utilisateur connecté
+        filter: `user = '${pb.authStore.model!.id}'`,
+        sort: '-created', 
+        expand: 'user', // Filtrer les rêves par l'ID de l'utilisateur connecté
       });
       return records;
     } catch (error) {
