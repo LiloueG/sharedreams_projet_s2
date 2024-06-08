@@ -1,14 +1,6 @@
 <script setup lang="ts">
-import Benne from '@/components/icons/Benne.vue'
 import img_profil from '../assets/image/img_profil.png'
-import type { DreamsResponse } from '@/pocketbase-types'
-
-
-const props = defineProps<DreamsResponse>()
-
-console.log("les props", props)
-
-
+import Benne from '@/components/icons/Benne.vue'
 </script>
 
 <template>

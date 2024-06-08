@@ -106,3 +106,60 @@ export async function getFriendCount() {
         throw error;
     }
 }
+
+
+export async function getFriends() {
+    try {
+        const user = await pb.collection('users').getOne(pb.authStore.model!.id); // Get the logged-in user
+        const data = user[0]
+        const friend = await pb.collection('users').getOne(data); // Get the logged-in user
+        return friend;
+        
+    } catch (error) {
+        console.error("Error while retrieving friends:", error);
+        throw error;
+    }
+}
+    
+
+// export const fetchData = async () => {
+//     try {
+//       const response = await fetch('https://api.example.com/data');
+//       if (!response.ok) {
+//         throw new Error('Network response was not ok');
+//       }
+//       const data = await response.json();
+//       return data;
+//     } catch (error) {
+//       console.error('Error fetching data:', error);
+//       throw error;
+//     }
+//   };
+      
+  // Fonction pour envoyer un message à l'API de Together.ai
+  //ajoute le code pour ma cle api
+const apiKey = 'a83b6e25dbfcac4699f79cf64e8cea6f6e0fa3767c405d5ef4febf259efc9a88';
+export const sendToTogetherAI = async (message: string): Promise<string> => {
+  // Envoi d'une requête POST à l'API avec le message de l'utilisateur
+  const response = await fetch('https://api.together.xyz/v1', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({ message }), // Le message est envoyé dans le corps de la requête
+  });
+
+  // Récupération de la réponse au format JSON
+  const data = await response.json();
+  // Retour de la réponse de l'IA
+  return data.response;
+};
+
+export const fetchData = async () => {
+    return [
+      { title: 'Slide 1', content: 'Content for slide 1' },
+      { title: 'Slide 2', content: 'Content for slide 2' },
+      { title: 'Slide 3', content: 'Content for slide 3' }
+    ];
+  };

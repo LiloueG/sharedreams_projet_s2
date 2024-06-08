@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import retour from '@/components/icons/retour.vue'
-import ajout_amis from '@/components/icons/ajout_amis.vue'
 import search from '@/components/icons/search.vue'
-import CardAmis from '@/components/CardAmis.vue'
+import CardAjoutAmis from '@/components/CardAjoutAmis.vue'
 import barre from '@/components/barre.vue'
-
-
 </script>
 
 <template>
@@ -13,14 +10,11 @@ import barre from '@/components/barre.vue'
     <main class="px-4 py-12 min-h-screen">
         <div class="flex justify-between">
             <div class="flex gap-3">
-                <RouterLink to="/accueil">
+                <RouterLink to="/amis">
                     <retour />
                 </RouterLink>
-                <h1 class="font-Marigny text-2xl font-bold">Amis</h1>
+                <h1 class="font-Marigny text-2xl font-bold">Ajoutez des amis</h1>
             </div>
-            <RouterLink to="/ajout-amis">
-                <ajout_amis />
-            </RouterLink>
         </div>
         <form class="relative mt-6">
             <input type="search" class="w-full font-light placeholder:text-zinc-500 px-4 py-2 border-zync-500 rounded-xl bg-white/20 pl-12" placeholder="Rechercher des utilisateurs..."/>
@@ -28,6 +22,7 @@ import barre from '@/components/barre.vue'
                 <search />
             </div> 
         </form>
-        <CardAmis />
+        <h2 class="text-gray-500 mt-4">Suggestions</h2>
+        <CardAjoutAmis />
     </main>
 </template>

@@ -82,7 +82,7 @@ function toggleLove() {
             </div>
             <p class="text-xs">{{ convertirEnTempsEcoulé(created) }}</p>
         </div>
-        <p>{{ dreamnight }}</p>
+        <p class="font-bold font-Marigny text-lg" >{{ dreamnight }}</p>
         <p>{{ dream }}</p>
         <div class="flex gap-4">
             <div class="flex gap-2">

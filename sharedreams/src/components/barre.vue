@@ -16,13 +16,13 @@ import { RouterLink } from 'vue-router'
                 <p class="text-xs mt-1">Accueil</p>
             </div>    
         </RouterLink>
-        <RouterLink to="/">
+        <RouterLink to="/dreamy">
             <div class="flex flex-col items-center">
                 <dreamy />
                 <p class="text-xs mt-1">Dreamy</p>
             </div>
         </RouterLink>
-        <RouterLink to="/">
+        <RouterLink to="/suivi">
             <div class="flex flex-col items-center">
                 <suivi />
                 <p class="text-xs mt-1">Suivi</p>
@@ -31,7 +31,7 @@ import { RouterLink } from 'vue-router'
         <RouterLink to="/">
             <div class="flex flex-col items-center">
                 <forum />
-                <p class="text-xs mt-1">Forum</p>
+                <p class="text-xs mt-1">Messages</p>
             </div>
         </RouterLink>
         <RouterLink to="/profil">
