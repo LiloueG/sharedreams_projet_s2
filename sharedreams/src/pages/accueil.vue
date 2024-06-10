@@ -16,7 +16,7 @@ const user = await pb.collection('users').getOne(pb.authStore.model.id)
 </script>
 
 <template>
-  <barre />
+  <barre class="z-10"/>
   <main class="px-4 py-12 min-h-screen">
       <div class="font-Marigny text-2xl flex justify-between">
         <div>

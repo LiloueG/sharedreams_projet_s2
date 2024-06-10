@@ -35,11 +35,11 @@ const handleValidation = async () => {
             <h1 class="font-Marigny text-2xl font-bold">Ecrivez votre rêve !</h1>
         </div>
         
-        <div class="flex justify-center gap-4 mt-12">
+        <div class="flex justify-center gap-4 mt-16">
             <button @click="layout = 'dream'" class=" border-2 px-8 py-2 rounded-full font-Marigny font-semibold" :class="{ 'border-orange-400 border-2 bg-orange-400': layout == 'dream' }">Rêve</button>
             <button @click="layout = 'nightmare'" class="border-2 px-8 py-2 rounded-full font-Marigny font-semibold" :class="{ 'border-orange-400 border-2 bg-orange-400': layout == 'nightmare' }">Cauchemar</button>
         </div>
-        <p class="font-Marigny mt-6">Comment vous sentez vous ?</p>
+        <p class="font-Marigny mt-10">Comment vous sentez vous ?</p>
         <div class="flex">
             <happy @click="dreamy = 'happy'" class="h-16" :class="{ 'scale-125':dreamy == 'happy' }"/>
             <heart @click="dreamy = 'heart'" class="h-16" :class="{ 'scale-125':dreamy == 'heart' }"/>
@@ -48,7 +48,7 @@ const handleValidation = async () => {
             <scared @click="dreamy = 'scared'" class="h-16" :class="{ 'scale-125':dreamy == 'scared' }"/>
         </div>
         <form>
-            <div class="mt-6">
+            <div class="mt-10">
                 <textarea type="text" id="name" v-model="dream" class="w-full h-64 font-light placeholder:text-white px-4 py-2 border-white border-2 rounded-md bg-slate-200/50 " placeholder="Ecrivez votre message" />
             </div>
         </form>

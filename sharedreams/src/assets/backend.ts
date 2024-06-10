@@ -1,7 +1,7 @@
 import type { TypedPocketBase } from '@/pocketbase-types';
 import PocketBase from 'pocketbase';
 import { useRoute } from 'vue-router'
-export const pb = new PocketBase('http://127.0.0.1:8090') as TypedPocketBase;
+export const pb = new PocketBase('https://sharedreams.lguyot.fr') as TypedPocketBase;
 
 const router = useRoute()
 
@@ -148,7 +148,27 @@ export async function getUsers() {
         const record = await pb.collection('users').getFullList({
             filter: `id != '${pb.authStore.model!.id}'`, 
         });
+        
         return record;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function getUserFriends() {
+    try {
+        const userId = pb.authStore.model!.id;
+        const friendIds = pb.authStore.model!.expand.user_friend;
+        console.log(friendIds);
+
+        // Création du filtre pour exclure l'utilisateur actuel et ses amis
+        const filter = `id != '${userId}' AND id NOT IN (${friendIds.map(id => `'${id}'`).join(', ')})`;
+
+        const users = await pb.collection('users').getFullList({
+            filter
+        });
+
+        return users;
     } catch (error) {
         return error;
     }

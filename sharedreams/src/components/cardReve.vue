@@ -5,11 +5,15 @@ import type { DreamsResponse } from '@/pocketbase-types'
 import { defineProps } from 'vue'
 import Img from '@/components/ImgCardReve.vue'
 import { ref } from 'vue'
-
+import Heart from '@/components/icons/heart.vue';
+import Sad from '@/components/icons/sad.vue';
+import Tired from '@/components/icons/tired.vue';
+import Happy from '@/components/icons/happy.vue';
+import Scared from '@/components/icons/scared.vue';
 
 
 const props = defineProps<DreamsResponse>()
-
+console.log(props)
 
 function convertirEnTempsEcoulé(heureDonnée) {
     // Convertir l'heure donnée en objet Date
@@ -77,8 +81,14 @@ function toggleLove() {
     <div class="bg-white/20 rounded-xl p-4 flex flex-col gap-3">
         <div class="flex justify-between items-center">
             <div class="flex gap-3 items-center">
-                <Img :record="props" :filename="expand.user.avatar" class="w-9 h-9 rounded-full"/> 
-                <p class="font-Marigny font-bold text-xl">{{ expand.user.username}}</p>
+                <Img :record="props" :filename="expand.user.avatar" class="w-11 h-11 rounded-full"/> 
+                <Heart v-if="props.emojis === 'heart'" class="absolute ml-6 mt-6 w-8 h-8"/>
+                <Sad v-if="props.emojis === 'sad'" class="absolute ml-6 mt-6 w-8 h-8"/>
+                <Tired v-if="props.emojis === 'tired'" class="absolute ml-6 mt-6 w-8 h-8"/>
+                <Scared v-if="props.emojis === 'scared'" class="absolute ml-6 mt-6 w-8 h-8"/>
+                <Happy v-if="props.emojis === 'happy'" class="absolute ml-6 mt-6 w-8 h-8"/>
+                <p class="font-Marigny font-bold text-xl ml-2">{{ expand.user.username}}</p>
+                
             </div>
             <p class="text-xs">{{ convertirEnTempsEcoulé(created) }}</p>
         </div>
