@@ -108,7 +108,10 @@ export async function getFriendCount() {
 
 export async function getFriends() {
     try {
-        const friend = await pb.collection('users').getFullList({filter: `user = '${pb.authStore.model!.id}'`, expand: 'user_friend'});
+        const friend = await pb.collection('users').getFullList({
+            filter: `user = '${pb.authStore.model!.id}'`, 
+            expand: 'user_friend'
+        });
         return friend;
         
     } catch (error) {
