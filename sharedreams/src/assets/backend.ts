@@ -40,7 +40,6 @@ export async function createDream(event: Object) {
 export async function getDreams() {
     try {
         const record = await pb.collection('dreams').getFullList(1, { perPage: 10, sort: '-created', expand: 'user'});
-        console.log(record);
         
         return record;
     } catch (error) {
@@ -89,7 +88,6 @@ export async function logout() {
 export async function getImg() {
     try {
         const record = await pb.collection('img').getFullList(1, { perPage: 10, sort: '-created', expand: 'user'});
-        console.log(record);
         
         return record;
     } catch (error) {
@@ -110,9 +108,7 @@ export async function getFriendCount() {
 
 export async function getFriends() {
     try {
-        const user = await pb.collection('users').getOne(pb.authStore.model!.id); // Get the logged-in user
-        const data = user[0]
-        const friend = await pb.collection('users').getOne(data); // Get the logged-in user
+        const friend = await pb.collection('users').getFullList({filter: `user = '${pb.authStore.model!.id}'`, expand: 'user_friend'});
         return friend;
         
     } catch (error) {

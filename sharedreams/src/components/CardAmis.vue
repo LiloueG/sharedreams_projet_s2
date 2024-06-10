@@ -2,9 +2,13 @@
 import Benne from '@/components/icons/Benne.vue'
 import img_profil from '../assets/image/img_profil.png'
 import type { DreamsResponse } from '@/pocketbase-types'
+import { getFriends } from '@/assets/backend';
 
 
 const props = defineProps<DreamsResponse>()
+
+const friends = await getFriends()
+console.log(friends)
 
 console.log("les props", props)
 

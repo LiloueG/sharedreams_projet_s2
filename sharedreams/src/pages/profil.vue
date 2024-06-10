@@ -15,7 +15,9 @@ console.log(dreamspublish)
     <main class="px-4 py-12 min-h-screen">
         <div class="flex justify-between mb-8">
             <h1 class="font-Marigny font-bold text-3xl ">Profil</h1>
-            <setting />
+            <RouterLink to="/parametres">
+                <setting />
+            </RouterLink>
         </div>
         <CardProfil />
         <div class="flex flex-col gap-5">

@@ -6,6 +6,7 @@ import lune_nuage from '@/components/icons/lune_nuage.vue';
 import nuage_coupe from '@/components/icons/nuage_coupe.vue';
 import petit_nuage from '@/components/icons/petit_nuage.vue';
 import ToggleSwitch from '@/components/icons/toggle.vue';
+import retour from '@/components/icons/retour.vue';
 
 const slides = ref([
   { content: 'Content for slide 1'},
@@ -17,7 +18,10 @@ const slides = ref([
 <template>
     <barre />
     <main class="px-4 py-12 min-h-screen">
-        <div>
+        <div class="flex gap-4">
+            <RouterLink to="/accueil">
+                <retour class="w-5 h-5"/>
+            </RouterLink>
             <h1 class="font-Marigny font-bold text-3xl ">Suivi de sommeil</h1>
         </div>
         <div id="app">
