@@ -19,7 +19,7 @@ const props = defineProps<{
 
 
 const src = pb.files.getUrl(props.record, props.filename, {'thumb': '100x250'});
-console.log(src)
+
 
 </script>
 <template>

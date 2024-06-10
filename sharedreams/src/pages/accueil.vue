@@ -5,8 +5,6 @@ import amis from '@/components/icons/amis.vue'
 import plus from '@/components/icons/plus.vue'
 import barre from '@/components/barre.vue';
 import type { dreamRecord } from '@/assets/pocket-types';
-import { ref, onMounted } from 'vue'
-import { on } from 'events';
 import verified from '@/components/icons/verified_vsetesajour.vue'
 
 
@@ -30,12 +28,6 @@ const user = await pb.collection('users').getOne(pb.authStore.model.id)
         </RouterLink>
       </div>
 
-      <section>
-          <p class="font-Marigny mt-6">Les plus populaires</p>
-          <div>
-            <p>Carrousel</p>
-          </div>
-      </section>
       <section class="py-6">
         <p class="font-Marigny font-bold text-2xl">Amis</p>
       </section>

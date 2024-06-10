@@ -4,7 +4,9 @@ import ajout_amis from '@/components/icons/ajout_amis.vue'
 import search from '@/components/icons/search.vue'
 import CardAmis from '@/components/CardAmis.vue'
 import barre from '@/components/barre.vue'
+import { getFriends } from '@/assets/backend'
 
+const friends = await getFriends()
 
 </script>
 
@@ -28,6 +30,6 @@ import barre from '@/components/barre.vue'
                 <search />
             </div> 
         </form>
-        <CardAmis />
+        <CardAmis v-for="friend in friends[0].expand.user_friend" :key="friend.id" v-bind="friend"/>
     </main>
 </template>
