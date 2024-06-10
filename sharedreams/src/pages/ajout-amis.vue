@@ -6,8 +6,8 @@ import barre from '@/components/barre.vue'
 import type { UsersRecord } from '@/pocketbase-types';
 import { getUsers } from '@/assets/backend'
 
-const getUsers: UsersRecord[] = await getUsers()
-console.log(getUsers)
+const users: UsersRecord[] = await getUsers()
+
 
 
 
@@ -31,6 +31,8 @@ console.log(getUsers)
             </div> 
         </form>
         <h2 class="text-gray-500 mt-4">Suggestions</h2>
-        <CardAjoutAmis v-for="user in users" :key="users.id" v-bind="user"/>
+        <div class="mb-16">
+            <CardAjoutAmis v-for="user in users" :key="users.id" v-bind="user"/>
+        </div>
     </main>
 </template>

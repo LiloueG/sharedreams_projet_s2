@@ -2,7 +2,7 @@
 import like from '@/components/icons/like.vue'
 import commentaire from '@/components/icons/commentaire.vue'
 import type { DreamsResponse } from '@/pocketbase-types'
-import { defineProps } from 'vue'
+import { defineProps, onMounted } from 'vue'
 import Img from '@/components/ImgCardReve.vue'
 import { ref } from 'vue'
 import Heart from '@/components/icons/heart.vue';
@@ -10,10 +10,11 @@ import Sad from '@/components/icons/sad.vue';
 import Tired from '@/components/icons/tired.vue';
 import Happy from '@/components/icons/happy.vue';
 import Scared from '@/components/icons/scared.vue';
+import { UpdateLike } from '@/assets/backend';
+import { pb } from '@/assets/backend';
 
 
 const props = defineProps<DreamsResponse>()
-console.log(props)
 
 function convertirEnTempsEcoulé(heureDonnée) {
     // Convertir l'heure donnée en objet Date
@@ -63,17 +64,31 @@ function convertirEnTempsEcoulé(heureDonnée) {
     }
 }
 
-const love = ref(false)
-const loveCount = ref(0)
+const likes = ref(props.like)
+const isLike = ref(false)
 
-function toggleLove() {
-    love.value = !love.value
-    if (love.value) {
-        loveCount.value++
-    } else {
-        loveCount.value--
-    }
+
+if (props.like.includes(pb.authStore.model!.id)) {
+    isLike.value = true
+} else {
+    isLike.value = false
 }
+
+console.log(isLike.value)
+
+async function toggleLove() {
+    if (isLike.value === false) {
+        likes.value += 1
+        likes.value = await UpdateLike(props.id, true)
+    } else {
+        likes.value -= 1
+        likes.value = await UpdateLike(props.id, false)
+    }
+    isLike.value = !isLike.value
+
+    
+}
+
 
 </script>
 
@@ -96,8 +111,8 @@ function toggleLove() {
         <p>{{ dream }}</p>
         <div class="flex gap-4">
             <div class="flex gap-2">
-                <like @click="toggleLove" :className="love ? 'text-red-600' : 'text-white'" />
-                <span class="text-white">{{ loveCount }}</span>
+                <like @click="toggleLove()" :className="isLike ? 'text-red-600' : 'text-white'" />
+                <span class="text-white">{{ likes.length }}</span>
             </div>
             <commentaire />
         </div>

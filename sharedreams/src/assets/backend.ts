@@ -174,6 +174,35 @@ export async function getUserFriends() {
     }
 }
 
+export async function UpdateUser(event: Object) {
+    try {
+        const record = await pb.collection('users').update(pb.authStore.model!.id, event);
+        return record;
+    } catch (error) {
+        return error;
+    }
+    
+}
+
+
+export async function UpdateLike(idDream: string, like: boolean) {
+    try {
+        if (like === true) {
+            const record = await pb.collection('dreams').update(idDream, {
+                'like+': pb.authStore.model!.id
+            });
+            return record.like;
+        } else {
+        const record = await pb.collection('dreams').update(idDream, {
+            'like-': pb.authStore.model!.id
+        });
+        return record.like;
+    }
+    } catch (error) {
+        return error;
+    }
+    
+}
 
 // export const fetchData = async () => {
 //     try {

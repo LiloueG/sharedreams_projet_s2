@@ -62,7 +62,7 @@ function logOutPush() {
                 <p>Support</p>
             </div>
             <div class="flex gap-3">
-                <deconnexion class="stroke-red-600"/>
+                <deconnexion class="text-red-600"/>
                 <button @click="logOutPush()" class="text-red-600">Déconnexion</button>
             </div>
         </div>

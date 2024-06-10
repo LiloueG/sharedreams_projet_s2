@@ -7,6 +7,7 @@ import type { RecordService } from 'pocketbase'
 
 export enum Collections {
 	Dreams = "dreams",
+	SleepData = "sleepData",
 	Users = "users",
 }
 
@@ -50,7 +51,15 @@ export type DreamsRecord = {
 	dream?: string
 	dreamnight?: DreamsDreamnightOptions
 	emojis?: DreamsEmojisOptions
+	like?: RecordIdString[]
 	user?: RecordIdString
+}
+
+export type SleepDataRecord = {
+	day?: IsoDateString
+	sleepHours?: number
+	sleepQuality?: string
+	sleepUser?: RecordIdString
 }
 
 export type UsersRecord = {
@@ -62,17 +71,20 @@ export type UsersRecord = {
 
 // Response types include system fields and match responses from the PocketBase API
 export type DreamsResponse<Texpand = unknown> = Required<DreamsRecord> & BaseSystemFields<Texpand>
+export type SleepDataResponse<Texpand = unknown> = Required<SleepDataRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
 
 export type CollectionRecords = {
 	dreams: DreamsRecord
+	sleepData: SleepDataRecord
 	users: UsersRecord
 }
 
 export type CollectionResponses = {
 	dreams: DreamsResponse
+	sleepData: SleepDataResponse
 	users: UsersResponse
 }
 
@@ -81,5 +93,6 @@ export type CollectionResponses = {
 
 export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'dreams'): RecordService<DreamsResponse>
+	collection(idOrName: 'sleepData'): RecordService<SleepDataResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
 }

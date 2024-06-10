@@ -13,7 +13,7 @@ async function add(id: string) {
 </script>
 
 <template>
-    <div class="flex gap-4 mt-6 bg-white/20 rounded-xl px-6 py-4 items-center">
+    <div class="flex gap-4 mt-3 bg-white/20 rounded-xl px-6 py-4 items-center">
         <ImgProfil :record="props" :filename="props.avatar" class="w-11 h-11 rounded-full"/>
         <div class="w-full flex justify-between items-center">
             <div>

@@ -38,7 +38,11 @@ const dreamspublish = await getDreamsforProfil()
     </p>
     <div v-else>Pas d'utilisateur</div>
     <div class="flex justify-center gap-6 py-7">
-        <button class="font-Marigny font-bold text-xs border-2 border-white rounded-3xl py-2 px-4">Modifier le profil</button>
+        <RouterLink to="/modificationProfil">
+            <button class="font-Marigny font-bold text-xs border-2 border-white rounded-3xl py-2 px-4">
+                Modifier le profil
+            </button>
+        </RouterLink>
         <button class="font-Marigny font-bold text-xs border-2 border-white rounded-3xl py-2 px-4">Partager le profil</button>
     </div>
 </template>
