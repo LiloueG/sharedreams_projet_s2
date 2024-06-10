@@ -54,7 +54,6 @@ const slides = ref([
                                     <ToggleSwitch v-model="isToggled" />
                                 </div>
                             </section>
-
                         </div>
                     </div>
                 </template>

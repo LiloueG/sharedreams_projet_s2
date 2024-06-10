@@ -7,6 +7,8 @@ import barre from '@/components/barre.vue'
 import { getFriends } from '@/assets/backend'
 
 const friends = await getFriends()
+console.log(typeof friends[0].expand)
+
 
 </script>
 
@@ -30,6 +32,11 @@ const friends = await getFriends()
                 <search />
             </div> 
         </form>
-        <CardAmis v-for="friend in friends[0].expand.user_friend" :key="friend.id" v-bind="friend"/>
+        <div v-if="friends[0].expand !== undefined">
+            <CardAmis v-for="friend in friends[0].expand.user_friend" :key="friend.id" v-bind="friend"/>
+        </div>
+        <div v-else>
+            <p class="text-gray-500 mt-4">Vous n'avez pas encore d'amis</p>
+        </div>
     </main>
 </template>

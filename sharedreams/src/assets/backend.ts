@@ -1,9 +1,9 @@
 import type { TypedPocketBase } from '@/pocketbase-types';
 import PocketBase from 'pocketbase';
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 export const pb = new PocketBase('http://127.0.0.1:8090') as TypedPocketBase;
 
-const router = useRouter
+const router = useRoute()
 
 export async function Adduser(event: Object) {
     try {
@@ -59,7 +59,6 @@ export async function getUsersbyEmail(mail) {
 
 export async function logout() {
     pb.authStore.clear()
-    router.push('/nuage')
   }
 
   export async function getDreamsforProfil() {
@@ -119,7 +118,42 @@ export async function getFriends() {
         throw error;
     }
 }
-    
+
+
+export async function DeleteAmis(id: string){
+    try {
+        const del = await pb.collection('Users').update(pb.authStore.model!.id, {
+            'user_friend-': id
+        });
+        return del;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function AddAmis(id: string){
+    try {
+        const add = await pb.collection('users').update(pb.authStore.model!.id, {
+            'user_friend+': id
+        });
+
+        return add;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function getUsers() {
+    try {
+        const record = await pb.collection('users').getFullList({
+            filter: `id != '${pb.authStore.model!.id}'`, 
+        });
+        return record;
+    } catch (error) {
+        return error;
+    }
+}
+
 
 // export const fetchData = async () => {
 //     try {

@@ -9,7 +9,14 @@ import Security from '@/components/icons/security.vue';
 import deconnexion from '@/components/icons/logout.vue';
 import { logout } from '@/assets/backend';
 import retour from '@/components/icons/retour.vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+
+function logOutPush() {
+    logout();
+    router.push('/nuage');
+}
 
 </script>
 
@@ -56,7 +63,7 @@ import retour from '@/components/icons/retour.vue';
             </div>
             <div class="flex gap-3">
                 <deconnexion class="stroke-red-600"/>
-                <button @click="logout()" class="text-red-600">Déconnexion</button>
+                <button @click="logOutPush()" class="text-red-600">Déconnexion</button>
             </div>
         </div>
     </main>

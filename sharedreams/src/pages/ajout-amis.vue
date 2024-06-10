@@ -3,6 +3,11 @@ import retour from '@/components/icons/retour.vue'
 import search from '@/components/icons/search.vue'
 import CardAjoutAmis from '@/components/CardAjoutAmis.vue'
 import barre from '@/components/barre.vue'
+import type { UsersRecord } from '@/pocketbase-types';
+import { getUsers } from '@/assets/backend'
+
+const users: UsersRecord[] = await getUsers()
+
 </script>
 
 <template>
@@ -23,6 +28,6 @@ import barre from '@/components/barre.vue'
             </div> 
         </form>
         <h2 class="text-gray-500 mt-4">Suggestions</h2>
-        <CardAjoutAmis />
+        <CardAjoutAmis @click="router.push('/ajout-amis')" v-for="user in users" :key="users.id" v-bind="user"/>
     </main>
 </template>
