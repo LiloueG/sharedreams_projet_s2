@@ -20,8 +20,8 @@ const dreamspublish = await getDreamsforProfil()
             </RouterLink>
         </div>
         <CardProfil />
-        <div class="flex flex-col gap-5">
-            <cardReve v-for="dream in dreamspublish" :key="dream.user" v-bind="dream" />
+        <div class="flex flex-col gap-5 mb-16">
+            <cardReve v-for="dream in dreamspublish" :key="dream.user" v-bind="dream"/>
         </div>
     </main>
 </template>

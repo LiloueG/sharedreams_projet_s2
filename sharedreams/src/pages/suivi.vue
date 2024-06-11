@@ -51,7 +51,7 @@ onMounted(async () => {
 
 <template>
     <barre />
-    <main class="px-4 py-12 min-h-screen bg-gradient-to-b from-violet-950 to-indigo-800 text-white">
+    <main class="px-4 py-12 min-h-screen text-white">
         <h2 class="text-center mb-8">Enregistrez votre sommeil</h2>
         <form @submit.prevent="addSleepData" class="mb-8 max-w-md mx-auto">
             <input type="date" v-model="newSleepData.day" required class="bg-violet-800 p-2 rounded mb-4 block w-full">

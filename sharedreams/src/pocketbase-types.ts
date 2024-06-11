@@ -63,7 +63,7 @@ export type SleepDataRecord = {
 }
 
 export type UsersRecord = {
-	avatar?: File | null
+	avatar?: string
 	biography?: string
 	mail?: boolean
 	user_friend?: RecordIdString[]
