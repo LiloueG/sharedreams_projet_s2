@@ -28,7 +28,7 @@ import { RouterLink } from 'vue-router'
                 <p class="text-xs mt-1">Suivi</p>
             </div>
         </RouterLink>
-        <RouterLink to="/">
+        <RouterLink to="/messagerie">
             <div class="flex flex-col items-center">
                 <forum />
                 <p class="text-xs mt-1">Messages</p>

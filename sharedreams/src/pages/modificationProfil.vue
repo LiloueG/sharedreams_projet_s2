@@ -1,61 +1,56 @@
 <script setup lang="ts">
 import retour from '@/components/icons/retour.vue'
-import { ref } from 'vue'
-import { UpdateUser } from '@/assets/backend'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { pb } from '@/assets/backend'
 
 const router = useRouter()
 
 const data = ref({
-    "username": "",
-    "email": "",
-    "password": "",
-    "passwordConfirm": "",
-    "biography": "",
-    "avatar": "",
+    username: "",
+    email: "",
+    password: "",
+    passwordConfirm: "",
+    biography: "",
+    avatar: null as File | null,
 });
 
-// const handleValidation = async () => {
-//     if (data.value.username === "" || data.value.mail === "" || data.value.password === "" || data.value.passwordConfirm === "" || data.value.biography === "" || data.value.avatar === "") {
-//         console.log("Veuillez remplir tous les champs");
-//     } 
-//     else {
-//             if (data.value.password === data.value.passwordConfirm && data.value.password.length >= 6) {
-//                 UpdateUser(data.value);
-//                 router.push('/profil');
-//                 console.log(data.value)
-//             } else {
-//                 console.log("Les mots de passe ne correspondent pas ou le mot de passe n'est pas assez long");
-//             }
-//             if (!data.value.mail.includes("@") && !data.value.mail.includes(".")) {
-//                 console.log("L'adresse mail n'est pas valide");
-//             } 
-//             else {
-//                 console.log(data.value.mail);
-//             }
-//             if (data.value.username === data.value.username) {
-//                 console.log(data.value.username);}
-//             else { 
-//                 console.log("Le nom d'utilisateur n'est pas valide"); 
-//             }
-//     }
-// }
+const originalData = ref({ ...data.value });
 
+onMounted(async () => {
+    try {
+        const userId = pb.authStore.model?.id;
+        if (!userId) throw new Error("Utilisateur non connecté ou ID utilisateur introuvable");
+        
+        const userData = await pb.collection('users').getOne(userId);
+        data.value = { 
+            username: userData.username,
+            email: userData.email,
+            biography: userData.biography,
+            avatar: null,
+            password: "",
+            passwordConfirm: ""
+        };
+        originalData.value = { ...data.value };
+    } catch (error) {
+        console.error("Erreur lors de la récupération des données de l'utilisateur:", error);
+    }
+});
 
 const handleValidation = async () => {
     let valid = true;
-    
-    // Vérification des champs fournis
-    if (data.value.username && data.value.username.trim() === "") {
-        console.log("Le nom d'utilisateur ne doit pas être vide");
-        valid = false;
+    const formData = new FormData();
+
+    if (data.value.username && data.value.username.trim() !== originalData.value.username) {
+        formData.append('username', data.value.username);
     }
-    
-    if (data.value.email) {
+
+    if (data.value.email && (data.value.email !== originalData.value.email)) {
         if (!data.value.email.includes("@") || !data.value.email.includes(".")) {
             console.log("L'adresse mail n'est pas valide");
             valid = false;
+        } else {
+            formData.append('email', data.value.email);
         }
     }
 
@@ -63,38 +58,42 @@ const handleValidation = async () => {
         if (data.value.password !== data.value.passwordConfirm) {
             console.log("Les mots de passe ne correspondent pas");
             valid = false;
-        } else if (data.value.password && data.value.password.length < 6) {
+        } else if (data.value.password.length >= 6) {
+            formData.append('password', data.value.password);
+        } else {
             console.log("Le mot de passe doit contenir au moins 6 caractères");
             valid = false;
         }
     }
-    if (data.value.biography) {
-        if (data.value.biography.trim() === "") {
-            console.log("La description ne doit pas être vide");
-            valid = false;
-        }
+
+    if (data.value.biography && data.value.biography.trim() !== originalData.value.biography) {
+        formData.append('biography', data.value.biography);
     }
-    
+
     if (data.value.avatar) {
-        // Vérifier que le fichier est une image
         const allowedExtensions = ["jpg", "jpeg", "png", "gif", "webp"];
-        const extension = data.value.avatar.split('.').pop();
+        const extension = data.value.avatar.name.split('.').pop()?.toLowerCase();
         if (!allowedExtensions.includes(extension)) {
             console.log("Le fichier fourni n'est pas une image");
             valid = false;
+        } else {
+            formData.append('avatar', data.value.avatar);
         }
     }
 
-    // Si tous les champs fournis sont valides, envoyer les données
-    if (valid) {
+    if (valid && formData.keys().next().value) {
         try {
-            await UpdateUser(data.value);
-            router.push('/profil');
+            const userId = pb.authStore.model?.id;
+            if (!userId) throw new Error("Utilisateur non connecté ou ID utilisateur introuvable");
+
+            await pb.collection('users').update(userId, formData);
             console.log(data.value);
-            //console.log(pb.authStore.model)
+            router.push('/profil');
         } catch (error) {
-            console.error("Erreur lors de la mise à jour de l'utilisateur:", error);
+            console.error("Erreur lors de la mise à jour de l'utilisateur:", error.response ? error.response.data : error.message);
         }
+    } else if (!formData.keys().next().value) {
+        console.log("Aucun champ n'a été modifié");
     }
 }
 
@@ -102,31 +101,9 @@ const handleFileUpload = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const file = target.files?.[0] || null;
   if (file) {
-    data.value.avatar = file ? file.name : "";
+    data.value.avatar = file;
   }
 };
-
-
-// const formData =await new FormData();
-//     try {
-        
-//         formData.append('username', data.value.username);
-//         formData.append('mail', data.value.mail);
-//         formData.append('avatar', data.value.avatar as unknown as Blob);
-//         formData.append('biography', data.value.biography);
-//         formData.append('password', data.value.password);
-//         formData.append('passwordConfirm', data.value.password);
-
-//         await pb.collection('users').update(pb.authStore.model?.id, formData);
-
-//         console.log(formData);
-//     } catch (error) {
-//         console.error("Erreur lors de la création du FormData:", error);
-//     }
-
-
-
-
 </script>
 
 <template>
@@ -151,7 +128,7 @@ const handleFileUpload = (event: Event) => {
                 <input type="password" id="password" v-model="data.password" class="w-full font-light placeholder:text-slate-200 px-4 py-2 border-zync-500 rounded-xl bg-white/20" placeholder="Mot de passe"/>
             </div>
             <div class="mt-4">
-                <label for="password" class="text-gray-400">Confirmer le mot de passe</label>
+                <label for="passwordConfirm" class="text-gray-400">Confirmer le mot de passe</label>
                 <input type="password" id="passwordConfirm" v-model="data.passwordConfirm" class="w-full font-light placeholder:text-slate-200 px-4 py-2 border-zync-500 rounded-xl bg-white/20" placeholder="Confirmer le mot de passe"/>
             </div>
             <div class="mt-4">

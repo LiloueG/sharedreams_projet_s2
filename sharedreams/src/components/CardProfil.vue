@@ -19,7 +19,7 @@ const dreamspublish = await getDreamsforProfil()
 <template>
     <div class="mb-3" v-if="user">
         <div class="flex gap-8">
-            <ImgPb :record="user" :filename="user.avatar" class="w-14 h-14 rounded-full"/> 
+            <ImgPb :record="user" :filename="user.avatar" class="w-20 h-20 rounded-full"/> 
             <div class="w-full flex justify-around">
                 <div class="flex flex-col">
                     <p class="font-Marigny font-medium">Amis</p>
@@ -31,9 +31,9 @@ const dreamspublish = await getDreamsforProfil()
                 </div>
             </div>
         </div>
-        <p class="font-bold font-Marigny text-xl">{{ user.username }}</p>
+        <p class="font-bold font-Marigny mt-2 ml-3 text-xl">{{ user.username }}</p>
     </div>
-    <p  v-if="user" class="text-xs">{{ user.biography}}
+    <p  v-if="user" class="text-md">{{ user.biography}}
     </p>
     <div v-else>Pas d'utilisateur</div>
     <div class="flex justify-center gap-6 py-7">
