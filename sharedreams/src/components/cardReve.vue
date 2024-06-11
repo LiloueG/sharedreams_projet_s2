@@ -16,6 +16,7 @@ import { pb } from '@/assets/backend';
 
 const props = defineProps<DreamsResponse>()
 
+
 function convertirEnTempsEcoulé(heureDonnée) {
     // Convertir l'heure donnée en objet Date
     const dateDonnée = new Date(heureDonnée);

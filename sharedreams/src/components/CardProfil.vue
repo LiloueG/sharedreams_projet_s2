@@ -7,7 +7,6 @@ import { getFriendCount } from '@/assets/backend';
 
 const user = pb.authStore.model?(await pb.collection('users').getOne(pb.authStore.model.id)):null
 
-console.log("user : ", user);
 
 const friendCount = await getFriendCount()
 import { getDreamsforProfil } from '@/assets/backend';

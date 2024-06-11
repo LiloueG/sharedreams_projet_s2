@@ -1,9 +1,8 @@
 import type { TypedPocketBase } from '@/pocketbase-types';
 import PocketBase from 'pocketbase';
-import { useRoute } from 'vue-router'
 export const pb = new PocketBase('https://sharedreams.lguyot.fr') as TypedPocketBase;
 
-const router = useRoute()
+
 
 export async function Adduser(event: Object) {
     try {
@@ -176,8 +175,8 @@ export async function getUserFriends() {
 
 export async function UpdateUser(event: Object) {
     try {
-        const record = await pb.collection('users').update(pb.authStore.model!.id, event);
-        return record;
+        await pb.collection('users').update(pb.authStore.model!.id, event);
+        //return record;
     } catch (error) {
         return error;
     }
@@ -245,3 +244,58 @@ export const fetchData = async () => {
       { title: 'Slide 3', content: 'Content for slide 3' }
     ];
   };
+
+
+  export async function getAllData() {
+    try {
+      // Assurez-vous que 'day' est le nom correct du champ date dans votre collection
+      const records = await pb.collection('sleepData').getFullList(1, {
+        perPage: 100, // Vous pouvez ajuster le nombre par page selon vos besoins
+        sort: "day", // Trie les enregistrements par la date de manière ascendante
+      });
+      return records;
+    } catch (error) {
+      console.error('Erreur lors de la récupération des données', error);
+      throw error;
+    }
+  }
+  
+  
+  // Définition de la fonction pour évaluer la qualité du sommeil
+  const evaluateSleepQuality = (hours) => {
+      if (hours < 5) {
+          return "Mauvaise";
+      } else if (hours >= 5 && hours < 7) {
+          return "Acceptable";
+      } else if (hours >= 7 && hours <= 9) {
+          return "Bonne";
+      } else {
+          return "Excessive";
+      }
+  };
+  
+  // Fonction pour ajouter des données de sommeil
+  export async function addSleepData(sleepData) {
+      try {
+          // Assurez-vous que l'utilisateur est connecté
+          if (!pb.authStore.model) {
+              throw new Error("Utilisateur non connecté.");
+          }
+  
+          // Évaluer la qualité du sommeil
+          const sleepQuality = evaluateSleepQuality(sleepData.sleepHours);
+  
+          const record = await pb.collection('sleepData').create({
+              day: sleepData.day,
+              sleepHours: sleepData.sleepHours,
+              sleepQuality: sleepQuality,  // Utiliser la valeur évaluée
+              sleepUser: pb.authStore.model.id // Utilisez l'ID de l'utilisateur connecté
+          });
+          return record;
+      } catch (error) {
+          console.error('Erreur lors de la création des données de sommeil', error);
+          return null;
+      }
+  }
+  
+  

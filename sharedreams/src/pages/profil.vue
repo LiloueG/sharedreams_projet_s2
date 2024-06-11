@@ -7,11 +7,11 @@ import { getDreamsforProfil } from '@/assets/backend';
 
 const dreamspublish = await getDreamsforProfil()
 
-console.log(dreamspublish)
+
 </script>
 
 <template>
-    <barre />
+    <barre class="z-10" />
     <main class="px-4 py-12 min-h-screen">
         <div class="flex justify-between mb-8">
             <h1 class="font-Marigny font-bold text-3xl ">Profil</h1>

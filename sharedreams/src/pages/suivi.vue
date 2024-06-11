@@ -1,173 +1,98 @@
+<script setup lang="ts">
+import barre from '@/components/barre.vue';
+import { ref, onMounted } from 'vue';
+import slide_carousel from '@/components/slide_carousel.vue';
+import arrowLeft from '../components/icons/arrowLeft.vue';
+import arrowRight from '../components/icons/arrowRight.vue';
+import { getAllData, addSleepData as sendSleepData } from '@/assets/backend';
+
+const listeData = ref([]);
+const currentIndex = ref(0);
+
+interface NewSleepData {
+    day: string;
+    sleepHours: number;
+}
+
+const newSleepData = ref<NewSleepData>({
+    day: '',
+    sleepHours: 0,
+});
+
+const addSleepData = async () => {
+    if (!newSleepData.value.day || newSleepData.value.sleepHours <= 0) {
+        alert("Veuillez remplir correctement tous les champs.");
+        return;
+    }
+    const response = await sendSleepData(newSleepData.value);
+    if (response) {
+        listeData.value.push(response);
+        newSleepData.value = { day: '', sleepHours: 0 }; // Reset form
+    }
+};
+
+const next = () => {
+    if (currentIndex.value < listeData.value.length - 1) {
+        currentIndex.value++;
+    }
+};
+
+const prev = () => {
+    if (currentIndex.value > 0) {
+        currentIndex.value--;
+    }
+};
+
+onMounted(async () => {
+    listeData.value = await getAllData();
+});
+</script>
+
+
 <template>
     <barre />
-    <main class="px-4 py-12 min-h-screen bg-gradient-to-b from-indigo-950 to-indigo-900">
-        <div class="flex items-center gap-4 mb-6">
-            <router-link to="/accueil">
-                <retour class="w-5 h-5" />
-            </router-link>
-            <div class="flex flex-col items-center">
-                <h1 class="font-Marigny font-bold text-3xl">Suivi de sommeil</h1>
-                <p class="text-sm font-Marigny font-light">{{ formatDate(currentDay.day) }}</p>
+    <main class="px-4 py-12 min-h-screen bg-gradient-to-b from-violet-950 to-indigo-800 text-white">
+        <h2 class="text-center mb-8">Enregistrez votre sommeil</h2>
+        <form @submit.prevent="addSleepData" class="mb-8 max-w-md mx-auto">
+            <input type="date" v-model="newSleepData.day" required class="bg-violet-800 p-2 rounded mb-4 block w-full">
+            <input type="number" v-model="newSleepData.sleepHours" placeholder="Heures de sommeil" min="0" required class="bg-violet-800 p-2 rounded mb-4 block w-full">
+            <div class="flex justify-center">
+                <button type="submit" class="bg-orange-400 rounded font-Poppins p-2">Soumettre</button>
+            </div>
+        </form>
+        <div class="carousel-container overflow-hidden max-w-sm mx-auto">
+            <div class="carousel-track flex transition-transform duration-500 ease-in-out" :style="{ transform: `translateX(calc(-${currentIndex * 100}%))` }">
+                <slide_carousel v-for="(uneData, index) in listeData" :key="uneData.id" v-bind="uneData" class="w-full flex-shrink-0"/>
             </div>
         </div>
-        <div class="flex flex-col items-center">
-            <section class="bg-indigo-950/20 rounded-xl px-3 py-6 mb-6 max-w-md w-full">
-                <p class="text-sm font-Marigny font-light mb-6">Temps de sommeil</p>
-                <div class="flex flex-col sm:flex-row items-center gap-6 mb-6">
-                    <input type="time" v-model="varHour" class="bg-indigo-950/20 text-white p-2 rounded" />
-                    <button @click="updateSleepTime" class="p-2 bg-orange-400 text-white rounded font-Marigny">Mettre à
-                        jour</button>
-                </div>
-                <p class="font-Marigny font-bold text-3xl">{{ sleepTime }}</p>
-            </section>
-            <section class="w-full sm:w-[50%] bg-indigo-400/20 rounded-xl p-3 mb-3 sm:mb-0">
-                <p class="text-sm font-Marigny font-light mb-6">Qualité de sommeil</p>
-                <p class="font-Marigny font-bold text-lg">{{ calculateSleepQuality(sleepTime) }}</p>
-            </section>
-        </div>
-        <div class="flex justify-center items-center mt-6">
-            <button @click="showPreviousDay"
-                class="p-2 bg-indigo-600 text-white rounded-full w-10 h-10 flex justify-center items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
+        <div class="flex justify-between mt-4 max-w-sm mx-auto">
+            <button @click="prev" class="text-black p-2 rounded flex items-center">
+                <arrow-left />
             </button>
-            <div class="flex-grow"></div>
-            <button class="p-2 bg-indigo-600 text-white rounded-full w-10 h-10 flex justify-center items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-        </div>
-        <div class="flex items-center justify-center min-h-screen">
-            <button class="p-2 bg-orange-400 text-white rounded font-Marigny">
-                <RouterLink to="/statistiques">Aller à la page Statistiques</RouterLink>
+            <button @click="next" class=" text-black p-2 rounded flex items-center">
+                <arrow-right />
             </button>
         </div>
     </main>
 </template>
 
-<script setup lang="ts">
-import barre from '@/components/barre.vue';
-import { ref, onMounted } from 'vue';
 
-interface DayData {
-    id: number;
-    day: string;
-    sleep_hours: string;
-    sleep_quality: string;
-    relation_user: string;
+<style>
+.carousel-container {
+    width: 100%;
+    max-width: 400px; /* Adjust this width to fit mobile size */
+    margin: auto;
 }
 
-const varHour = ref('');
-const sleepTime = ref('00h 00 min');
-const daysData: DayData[] = []; // Placeholder for days data
-let currentDayIndex = 0;
-
-// Mock data for demonstration
-const mockData: DayData[] = [
-    { id: 1, day: '2024-06-08', sleep_hours: '7h 30 min', sleep_quality: 'Parfait', relation_user: 'user1' },
-    { id: 2, day: '2024-06-09', sleep_hours: '6h 45 min', sleep_quality: 'Adéquate', relation_user: 'user1' },
-    { id: 3, day: '2024-06-10', sleep_hours: '8h 15 min', sleep_quality: 'Parfait', relation_user: 'user1' },
-];
-
-const currentDay = ref<DayData>(mockData[currentDayIndex]);
-
-const updateSleepTime = () => {
-    if (!varHour.value) {
-        sleepTime.value = '00h 00 min';
-        return;
-    }
-    const [hours, minutes] = varHour.value.split(':');
-    sleepTime.value = `${hours}h ${minutes} min`;
-
-    // Mettre à jour les données de sommeil du jour actuel
-    currentDay.value.sleep_hours = sleepTime.value;
-    currentDay.value.sleep_quality = calculateSleepQuality(sleepTime.value);
-};
-
-const calculateSleepQuality = (sleepHours: string) => {
-    const [hoursString, minutesString] = sleepHours.split(' ');
-    const hours = parseInt(hoursString);
-    const minutes = parseInt(minutesString);
-    const totalMinutes = hours * 60 + minutes;
-
-    if (totalMinutes < 360) {
-        return 'Basse';
-    } else if (totalMinutes >= 360 && totalMinutes <= 480) {
-        return 'Adéquate';
-    } else if (totalMinutes > 480 && totalMinutes <= 720) {
-        return 'Parfait';
-    } else {
-        return 'Basse';
-    }
-};
-
-const showPreviousDay = () => {
-    if (currentDayIndex > 0) {
-        currentDayIndex--;
-        currentDay.value = mockData[currentDayIndex];
-    }
-};
-
-const showNextDay = () => {
-    if (currentDayIndex < mockData.length - 1) {
-        currentDayIndex++;
-        currentDay.value = mockData[currentDayIndex];
-    }
-};
-
-const formatDate = (dateString: string) => {
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const date = new Date(dateString);
-    return date.toLocaleDateString('fr-FR', options);
-};
-</script>
-
-<style scoped>
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Marigny', sans-serif;
-    min-height: 100vh;
-    background: linear-gradient(to bottom, #4c1d95, #2a144a);
-}
-
-#app {
+.carousel-track {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    transition: transform 0.5s ease-in-out;
 }
 
-@media (min-width: 640px) {
-    .flex {
-        display: flex;
-    }
-
-    .items-center {
-        align-items: center;
-    }
-
-    .justify-center {
-        justify-content: center;
-    }
-
-    .w-full {
-        width: 100%;
-    }
-
-    .max-w-md {
-        max-width: 28rem;
-    }
-
-    .max-w-2xl {
-        max-width: 42rem;
-    }
-
-    .w-[50%] {
-        width: 50%;
-    }
+.slide_carousel {
+    width: 100%; /* Ensure it takes the full width of the container */
+    flex-shrink: 0;
+    margin-left: 1rem; /* Add margin to create space between slides */
+    margin-right: 1rem; /* Add margin to create space between slides */
 }
 </style>
