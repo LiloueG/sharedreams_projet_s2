@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>Commentaires pour le rêve {{ dreamId }}</h2>
+        <h2>Commentaires pour le rêve</h2>
         <div v-if="loading">Chargement des commentaires...</div>
         <div v-else>
             <div v-for="comment in comments" :key="comment.id">

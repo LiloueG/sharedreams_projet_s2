@@ -115,7 +115,9 @@ async function toggleLove() {
                 <like @click="toggleLove()" :className="isLike ? 'text-red-600' : 'text-white'" />
                 <span class="text-white">{{ likes.length }}</span>
             </div>
-            <commentaire />
+            <RouterLink :to="'comment/' + props.id">
+                <commentaire />
+            </RouterLink> 
         </div>
     </div>
 </template>

@@ -6,6 +6,7 @@ import type PocketBase from 'pocketbase'
 import type { RecordService } from 'pocketbase'
 
 export enum Collections {
+	Comments = "comments",
 	Dreams = "dreams",
 	Messages = "messages",
 	SleepData = "sleepData",
@@ -35,6 +36,12 @@ export type AuthSystemFields<T = never> = {
 } & BaseSystemFields<T>
 
 // Record types for each collection
+
+export type CommentsRecord = {
+	dream_id?: RecordIdString
+	text?: string
+	user_id?: RecordIdString[]
+}
 
 export enum DreamsDreamnightOptions {
 	"dream" = "dream",
@@ -78,6 +85,7 @@ export type UsersRecord = {
 }
 
 // Response types include system fields and match responses from the PocketBase API
+export type CommentsResponse<Texpand = unknown> = Required<CommentsRecord> & BaseSystemFields<Texpand>
 export type DreamsResponse<Texpand = unknown> = Required<DreamsRecord> & BaseSystemFields<Texpand>
 export type MessagesResponse<Texpand = unknown> = Required<MessagesRecord> & BaseSystemFields<Texpand>
 export type SleepDataResponse<Texpand = unknown> = Required<SleepDataRecord> & BaseSystemFields<Texpand>
@@ -86,6 +94,7 @@ export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSyste
 // Types containing all Records and Responses, useful for creating typing helper functions
 
 export type CollectionRecords = {
+	comments: CommentsRecord
 	dreams: DreamsRecord
 	messages: MessagesRecord
 	sleepData: SleepDataRecord
@@ -93,6 +102,7 @@ export type CollectionRecords = {
 }
 
 export type CollectionResponses = {
+	comments: CommentsResponse
 	dreams: DreamsResponse
 	messages: MessagesResponse
 	sleepData: SleepDataResponse
@@ -103,6 +113,7 @@ export type CollectionResponses = {
 // https://github.com/pocketbase/js-sdk#specify-typescript-definitions
 
 export type TypedPocketBase = PocketBase & {
+	collection(idOrName: 'comments'): RecordService<CommentsResponse>
 	collection(idOrName: 'dreams'): RecordService<DreamsResponse>
 	collection(idOrName: 'messages'): RecordService<MessagesResponse>
 	collection(idOrName: 'sleepData'): RecordService<SleepDataResponse>

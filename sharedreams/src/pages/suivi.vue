@@ -52,17 +52,20 @@ onMounted(async () => {
 <template>
     <barre />
     <main class="px-4 py-12 min-h-screen text-white">
-        <h2 class="text-center mb-8">Enregistrez votre sommeil</h2>
+        <h2 class="text-center mb-8 font-Marigny text-2xl font-bold">Enregistrez votre sommeil</h2>
         <form @submit.prevent="addSleepData" class="mb-8 max-w-md mx-auto">
             <input type="date" v-model="newSleepData.day" required class="bg-violet-800 p-2 rounded mb-4 block w-full">
-            <input type="number" v-model="newSleepData.sleepHours" placeholder="Heures de sommeil" min="0" required class="bg-violet-800 p-2 rounded mb-4 block w-full">
+            <input type="number" v-model="newSleepData.sleepHours" placeholder="Heures de sommeil" min="0" required
+                class="bg-violet-800 p-2 rounded mb-4 block w-full">
             <div class="flex justify-center">
                 <button type="submit" class="bg-orange-400 rounded font-Poppins p-2">Soumettre</button>
             </div>
         </form>
         <div class="carousel-container overflow-hidden max-w-sm mx-auto">
-            <div class="carousel-track flex transition-transform duration-500 ease-in-out" :style="{ transform: `translateX(calc(-${currentIndex * 100}%))` }">
-                <slide_carousel v-for="(uneData, index) in listeData" :key="uneData.id" v-bind="uneData" class="w-full flex-shrink-0"/>
+            <div class="carousel-track flex transition-transform duration-500 ease-in-out"
+                :style="{ transform: `translateX(calc(-${currentIndex * 100}%))` }">
+                <slide_carousel v-for="(uneData, index) in listeData" :key="uneData.id" v-bind="uneData"
+                    class="w-full flex-shrink-0" />
             </div>
         </div>
         <div class="flex justify-between mt-4 max-w-sm mx-auto">
