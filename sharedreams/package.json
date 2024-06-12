@@ -12,9 +12,9 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
     "typegen": "pocketbase-typegen --db ../pb_data/data.db --out ./src/pocketbase-types.ts"
-
   },
   "dependencies": {
+    "together-ai": "^0.6.0-alpha.3",
     "vue": "^3.4.21",
     "vue-router": "^4.3.2"
   },
@@ -30,6 +30,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.23.0",
     "npm-run-all2": "^6.1.2",
+    "pocketbase-typegen": "^1.2.1",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.3",
@@ -38,7 +39,6 @@
     "vite": "^5.2.8",
     "vite-plugin-pages": "^0.32.1",
     "vite-plugin-vue-devtools": "^7.0.25",
-    "vue-tsc": "^2.0.11",
-    "pocketbase-typegen": "^1.2.1"
+    "vue-tsc": "^2.0.11"
   }
 }

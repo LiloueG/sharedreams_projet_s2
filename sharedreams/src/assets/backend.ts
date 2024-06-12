@@ -301,3 +301,28 @@ export const fetchData = async () => {
   }
   
   
+  export async function getComments(dreamId) {
+    try {
+        const comments = await pb.collection('comments').getFullList({
+            filter: `dream_id = '${dreamId}'`,
+        });
+        return comments;
+    } catch (error) {
+        console.error("Error while retrieving comments:", error);
+        throw error;
+    }
+}
+
+export async function addComment(dreamId, commentText) {
+    try {
+        const comment = await pb.collection('comments').create({
+            dream_id: dreamId,
+            text: commentText,
+            user_id: pb.authStore.model!.id, // L'utilisateur actuel
+        });
+        return comment;
+    } catch (error) {
+        console.error("Error while adding comment:", error);
+        throw error;
+    }
+}

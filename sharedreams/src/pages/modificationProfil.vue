@@ -28,7 +28,7 @@ onMounted(async () => {
             email: userData.email,
             biography: userData.biography,
             avatar: null,
-            password: "",
+            password: userData.password,
             passwordConfirm: ""
         };
         originalData.value = { ...data.value };

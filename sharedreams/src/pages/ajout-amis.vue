@@ -12,6 +12,22 @@ const users: UsersRecord[] = await getUsers()
 console.log(users)
 console.log(pb.authStore.model)
 
+const searchQuery = ref('');
+
+const filteredUsers = ref<UsersRecord[]>([]);
+
+const searchUsers = async () => {
+  try {
+    const response = await pb.collection('users').getFullList({
+      filter: `username LIKE '%${searchQuery.value}%'`, // Filtrez les utilisateurs dont le nom correspond à la recherche
+      limit: 10 // Limitez le nombre de résultats
+    });
+    filteredUsers.value = response;
+  } catch (error) {
+    console.error("Error searching users:", error);
+  }
+};
+
 
 </script>
 
@@ -26,8 +42,8 @@ console.log(pb.authStore.model)
                 <h1 class="font-Marigny text-2xl font-bold">Ajoutez des amis</h1>
             </div>
         </div>
-        <form class="relative mt-6">
-            <input type="search" class="w-full font-light placeholder:text-zinc-500 px-4 py-2 border-zync-500 rounded-xl bg-white/20 pl-12" placeholder="Rechercher des utilisateurs..."/>
+        <form @submit.prevent="searchUsers" class="relative mt-6">
+            <input type="search" v-model="searchQuery" class="w-full font-light placeholder:text-zinc-500 px-4 py-2 border-zync-500 rounded-xl bg-white/20 pl-12" placeholder="Rechercher des utilisateurs..."/>
             <div class="absolute inset-y-0 left-0 flex items-center pl-3"> 
                 <search />
             </div> 
