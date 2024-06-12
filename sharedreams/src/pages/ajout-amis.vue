@@ -4,22 +4,13 @@ import search from '@/components/icons/search.vue'
 import CardAjoutAmis from '@/components/CardAjoutAmis.vue'
 import barre from '@/components/barre.vue'
 import type { UsersRecord } from '@/pocketbase-types';
-import { ref, onMounted } from 'vue'
-import { getUsers } from '@/assets/backend'
-
-const users = ref([]);
-
-onMounted(async () => {
-    await refreshUsers();
-});
-
-const refreshUsers = async () => {
-    users.value = await getUsers();
-};
+import { ref } from 'vue'
+import { getUsers, pb } from '@/assets/backend'
 
 const users: UsersRecord[] = await getUsers()
 
-
+console.log(users)
+console.log(pb.authStore.model)
 
 
 </script>

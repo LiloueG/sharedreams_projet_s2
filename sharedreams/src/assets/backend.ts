@@ -144,13 +144,15 @@ export async function AddAmis(id: string){
 
 export async function getUsers() {
     try {
-        const record = await pb.collection('users').getFullList({
-            filter: `id != '${pb.authStore.model!.id}'`, 
-        });
-        
-        return record;
+        const allIDs = [...pb.authStore.model!.user_friend, pb.authStore.model!.id];
+        const allUsers = await pb.collection('users').getFullList();
+
+        const users = allUsers.filter(user => !allIDs.includes(user.id));
+
+        return users;
     } catch (error) {
-        return error;
+        console.error("Error while retrieving users:", error);
+        throw error;
     }
 }
 
