@@ -305,6 +305,7 @@ export const fetchData = async () => {
     try {
         const comments = await pb.collection('comments').getFullList({
             filter: `dream_id = '${dreamId}'`,
+            expand: 'user_id'
         });
         return comments;
     } catch (error) {
@@ -313,13 +314,18 @@ export const fetchData = async () => {
     }
 }
 
-export async function addComment(dreamId, commentText) {
+export async function addComment(dreamId: string, content: string): Promise<CommentsResponse> {
+    if (!pb.authStore.isValid) {
+        throw new Error("User not authenticated");
+    }
+    
     try {
-        const comment = await pb.collection('comments').create({
-            dream_id: dreamId,
-            text: commentText,
-            user_id: pb.authStore.model!.id, // L'utilisateur actuel
-        });
+        const data = {
+            dreamI_id: dreamId,
+            text: content,
+            user_id: pb.authStore.model!.id, // Assuming you store userId in authStore model
+        };
+        const comment = await pb.collection('comments').create(data);
         return comment;
     } catch (error) {
         console.error("Error while adding comment:", error);

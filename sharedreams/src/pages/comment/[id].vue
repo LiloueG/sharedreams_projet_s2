@@ -1,60 +1,90 @@
-<template>
-  <main class="px-4 py-12 min-h-screen">
-    <div class="flex justify-between">
-      <div class="flex gap-3">
-        <RouterLink to="/accueil">
-          <retour />
-        </RouterLink>
-        <h1 class="font-Marigny text-2xl font-bold">Commentaires</h1>
-      </div>
-    </div>
-    <div class="mt-8">
-      <div v-for="comment in comments" :key="comment.id" class="mb-4">
-        <p class="font-bold">{{ comment.author }}</p>
-        <p>{{ comment.content }}</p>
-      </div>
-      <div class="mt-6">
-        <textarea v-model="newComment" placeholder="Ajoutez un commentaire..." class="w-full p-2 border"></textarea>
-        <button @click="addComment" class="mt-2 px-4 py-2 bg-blue-500 text-white">Publier</button>
-      </div>
-    </div>
-  </main>
-</template>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { getComments, addComment } from '@/assets/backend';
+import type { CommentsResponse } from '@/pocketbase-types';
+import retour from '@/components/icons/retour.vue';
 
-<script>
-import { RouterLink } from 'vue-router'
-import retour from '@/components/icons/retour.vue'
-import { ref } from 'vue'
+const route = useRoute();
+const dreamId = route.params.id as string;
+const comments = ref<CommentsResponse[]>([]);
+const newComment = ref('');
 
-export default {
-  components: {
-    retour,
-    RouterLink,
-  },
-  setup() {
-    const comments = ref([
-      { id: 1, author: 'Alice', content: 'Super article !' },
-      { id: 2, author: 'Bob', content: 'Merci pour les infos.' },
-    ]);
-    const newComment = ref('');
 
-    const addComment = () => {
-      if (newComment.value.trim()) {
-        const nextId = comments.value.length + 1;
-        comments.value.push({
-          id: nextId,
-          author: 'Anonyme',
-          content: newComment.value,
-        });
-        newComment.value = '';
-      }
-    };
-
-    return { comments, newComment, addComment };
-  },
+async function loadComments() {
+    try {
+        comments.value = await getComments(dreamId);
+    } catch (error) {
+        console.error('Error loading comments:', error);
+    }
 }
+
+async function postComment() {
+    if (!newComment.value.trim()) return;
+
+    try {
+        const comment = await addComment(dreamId, newComment.value);
+        comments.value.unshift(comment); // Add the new comment at the top of the list
+        newComment.value = '';
+    } catch (error) {
+        console.error('Error posting comment:', error);
+    }
+}
+
+onMounted(() => {
+    loadComments();
+});
+
+console.log(comments);
+
 </script>
 
+<template>
+    <div class="comments-page px-4 py-12 min-h-screen">
+        <div class="flex justify-between">
+            <div class="flex gap-3">
+                <RouterLink to="/amis">
+                    <retour />
+                </RouterLink>
+                <h1 class="font-Marigny text-2xl font-bold">Commentaires</h1>
+            </div>
+        </div>
+
+        <form @submit.prevent="postComment" class="relative mt-6">
+            <input
+                v-model="newComment"
+                type="text"
+                class="w-full font-light placeholder:text-zinc-500 px-4 py-2 border-zinc-500 rounded-xl bg-white/20 pl-12"
+                placeholder="Écrire un commentaire..."
+            />
+            <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">
+                Publier
+            </button>
+        </form>
+
+        <div class="comments-list mt-6">
+            <div v-for="comment in comments" :key="comment.id" class="comment-card bg-white/20 rounded-xl p-4 mb-4">
+              <div class="px-4">
+                <p class="font-Marigny font-bold text-xl">{{ comment.expand.user_id[0].username }}</p>
+                <small class="text-gray-500">le {{ new Date(comment.created).toLocaleString() }}</small>
+                <p class="text-lg">{{ comment.text }}</p>
+              </div>
+            </div>
+        </div>
+    </div>
+</template>
+
 <style scoped>
-/* Ajoutez vos styles ici */
+.comment-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.comments-list {
+    margin-top: 20px;
+}
+.comment-card {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
 </style>
