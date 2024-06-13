@@ -5,7 +5,7 @@ import logo_sharedreams from '@/components/icons/logo_sharedreams.vue';
 
 <template>
     <div class="bg-night-sky min-h-screen flex flex-col justify-center items-center z-50 absolute w-full">
-        <p class="text-white text-4xl mb-12 font-Poppins font-bold">Bien dormi ?</p>
+        <p class="text-white text-4xl mb-12 font-Marigny font-bold">Bien dormi ?</p>
         <logo_sharedreams class=" h-24 w-24 mb-11" />
         <div class="loader"></div>
     </div>
@@ -37,6 +37,3 @@ import logo_sharedreams from '@/components/icons/logo_sharedreams.vue';
 }
 </style>
 
-<style>
-@import 'https://cdn.jsdelivr.net/npm/tailwindcss@%5E2.0/dist/tailwind.min.css';
-</style>

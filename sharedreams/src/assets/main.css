@@ -10,5 +10,5 @@ body {
   background-attachment: fixed;
   inset: 0;
   @apply text-white;
-  font-family: 'Poppins', sans-serif;
+  @apply font-Poppins;
 }

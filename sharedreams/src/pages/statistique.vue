@@ -30,21 +30,22 @@ const formatDuration = (hours) => {
 </script>
 
 <template>
-    <div class="text-white min-h-screen p-4">
+    <div class="text-white min-h-screen px-4 py-12">
 
-        <header class="flex items-center justify-between">
+        <header class="flex gap-3">
             <button @click="goBack" class="text-white ">
                 <retour />
-                <h1 class="font-Marigny text-2xl font-bold"> Retour </h1>
             </button>
             <h1 class="font-Marigny text-2xl font-bold">Statistiques</h1>
             <div class="w-6"></div>
         </header>
 
 
-        <div class="mt-8">
+        <div class="mt-9">
 
-            <div class="circular-gradient w-32 h-32"></div>
+            <div class="flex justify-center">
+                <div class="circular-gradient w-32 h-32"></div>
+            </div>
             <div class="mt-8 px-4">
                 <div class="flex justify-between items-center mb-4">
                     <div class="text-lg font-semibold">Nuits réparatrices</div>

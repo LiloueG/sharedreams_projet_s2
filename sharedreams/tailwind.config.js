@@ -8,7 +8,7 @@ export default {
     extend: {},
     fontFamily: {
       'Marigny': ['Marigny', 'sans-serif'],
-      'Poppins': ['poppins', 'sans-serif'],
+      'Poppins': ['Poppins', 'sans-serif'],
     },
   },
   plugins: [],
