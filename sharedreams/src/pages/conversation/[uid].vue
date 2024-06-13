@@ -5,6 +5,7 @@ import { pb } from '@/assets/backend'; // Assurez-vous que le chemin est correct
 import send from '@/components/icons/send-2.vue';
 import ImgProfil from '@/components/ImgProfil.vue';
 import type { UsersResponse } from '@/pocketbase-types';
+import retour from '@/components/icons/retour.vue';
 
 const route = useRoute();
 
@@ -91,7 +92,8 @@ console.log(props)
 
 <template>
   <main class="text-white px-4 py-12">
-    <div class="flex gap-3">
+    <div class="flex gap-3 items-center">
+        <retour />
       <div class="w-11 h-11 bg-purple-600 rounded-full"></div>
       <div class="flex flex-col mb-4">
         <p v-if="userConversation" class="font-semibold">{{ userConversation.username }}</p>
@@ -100,7 +102,7 @@ console.log(props)
     </div>
 
     <div>
-        <div v-for="message in messages" :key="message.id" class="flex gap-2  w-[70%]" :class="message.sender === pb.authStore.model!.id ? 'bg-violet-400' : 'bg-orange-400' ">
+        <div v-for="message in messages" :key="message.id" class="flex gap-2 w-[70%]" :class="message.sender === pb.authStore.model!.id ? 'bg-violet-400' : 'bg-orange-400' ">
           <span class="font-semibold">{{ getUsername(message.sender) }}:</span>
           <p>{{ message.content }}</p>
         </div>
@@ -115,6 +117,3 @@ console.log(props)
   </main>
 </template>
 
-<style scoped>
-/* Ajoutez des styles supplémentaires si nécessaire */
-</style>
