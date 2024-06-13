@@ -77,10 +77,10 @@ const Acheter = () => {
                 <Security />
                 <p>Sécurité</p>
             </div>
-            <div class="flex gap-3 mb-9">
-                <support />
-                <p>Support</p>
-            </div>
+                <RouterLink to="/support" class="flex gap-3 mb-9">
+                    <support />
+                    <p>Support</p>
+                </RouterLink>
             <div class="flex gap-3">
                 <deconnexion class="text-red-600" />
                 <button @click="logOutPush()" class="text-red-600">Déconnexion</button>

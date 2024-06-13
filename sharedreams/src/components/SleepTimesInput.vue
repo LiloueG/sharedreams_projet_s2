@@ -16,7 +16,7 @@ export default {
     computed: {
         formattedSleepTime() {
             const [hours, minutes] = this.sleepTime.split(':');
-            return ${hours}h ${minutes} min;
+            return `${hours}h ${minutes} min`;
         }
     },
     methods: {

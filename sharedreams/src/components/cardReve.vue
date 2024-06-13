@@ -92,16 +92,8 @@ async function toggleLove() {
 
 const comments = ref([])
 
-const fetchComments = async () => {
-    try {
-        comments.value = await getComments(props.id)
-    } catch (error) {
-        console.error('Error fetching comments:', error)
-    }
-}
-
-onMounted(() => {
-    fetchComments()
+onMounted( async () => {
+    comments.value = await getComments(props.id)
 })
 
 </script>

@@ -10,7 +10,7 @@ import verified from '@/components/icons/verified_vsetesajour.vue'
 
 const dreams: dreamRecord[] = await getDreams()
 
-const user = await pb.collection('users').getOne(pb.authStore.model.id)
+const user = await pb.collection('users').getOne(pb.authStore.model!.id)
 
 
 </script>
@@ -29,7 +29,7 @@ const user = await pb.collection('users').getOne(pb.authStore.model.id)
       </div>
 
       <section class="py-6">
-        <p class="font-Marigny font-bold text-2xl">Amis</p>
+        <p class="font-Marigny font-bold text-2xl">Tout le monde</p>
       </section>
       <div class="flex flex-col gap-5">
         <CardReve v-for="dream in dreams" :key="dream.user" v-bind="dream" />

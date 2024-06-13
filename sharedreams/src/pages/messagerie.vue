@@ -5,6 +5,7 @@ import { pb } from '@/assets/backend'; // Assurez-vous que le chemin est correct
 import ImgProfil from '@/components/ImgProfil.vue';
 import retour from '@/components/icons/retour.vue';
 import barre from '@/components/barre.vue';
+import send from '@/components/icons/send-2.vue';
 
 const conversations = ref([]);
 
@@ -44,7 +45,7 @@ onMounted(async () => {
                             <span class="text-xs font-light text-white/75">En ligne</span>
                         </div>
                     </div>
-                    <IconSend class="w-5 h-5 text-white" />
+                    <send class="w-5 h-5 text-white" />
                 </RouterLink>
             </div>
         </div>

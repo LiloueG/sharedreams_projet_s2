@@ -303,6 +303,7 @@ export const fetchData = async () => {
   
   export async function getComments(dreamId) {
     try {
+        console.log(dreamId);
         const comments = await pb.collection('comments').getFullList({
             filter: `dream_id = '${dreamId}'`,
             expand: 'user_id'
