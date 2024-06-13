@@ -6,7 +6,12 @@ export const pb = new PocketBase('https://sharedreams.lguyot.fr') as TypedPocket
 
 export async function Adduser(event: Object) {
     try {
-        const record = await pb.collection('users').create(event);
+        await pb.collection('users').create(event);
+        const record = await pb.collection('users').authWithPassword(
+            event.email,
+            event.password,
+        );
+        console.log(pb.authStore.model);
         return record;
     } catch (error) {
         return error;

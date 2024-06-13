@@ -10,11 +10,14 @@ const polconfident = ref(false);
 
 
 const data = ref({
-    username: "",
-    email: "",
-    password: "",
-    passwordConfirm: "",
-    mail: false,
+    "username": "",
+    "email": "",
+    "emailVisibility": true,
+    "password": "",
+    "passwordConfirm": "",
+    "mail": false,
+    "user_friend": [],
+    "biography": ""
 });
 
 
@@ -24,9 +27,7 @@ const handleValidation = async () => {
     } else {
         if (polconfident.value === true) {
             if (data.value.password === data.value.passwordConfirm) {
-                Adduser(data.value);
-                router.push('/accueil');
-                console.log(data.value)
+                await Adduser(data.value);
             } else {
                 console.log("Les mots de passe ne correspondent pas");
             }

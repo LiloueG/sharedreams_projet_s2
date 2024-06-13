@@ -6,18 +6,20 @@ import plus from '@/components/icons/plus.vue'
 import barre from '@/components/barre.vue';
 import type { dreamRecord } from '@/assets/pocket-types';
 import verified from '@/components/icons/verified_vsetesajour.vue'
+import { onMounted, ref } from 'vue';
+
 
 
 const dreams: dreamRecord[] = await getDreams()
-
 const user = await pb.collection('users').getOne(pb.authStore.model!.id)
+
 
 
 </script>
 
 <template>
   <barre class="z-10"/>
-  <main class="px-4 py-12 min-h-screen">
+  <main v-if="user" class="px-4 py-12 min-h-screen">
       <div class="font-Marigny text-2xl flex justify-between">
         <div>
             <h1>Bonjour,</h1>

@@ -18,7 +18,6 @@ const handleValidation = async () => {
         console.log("Veuillez remplir tous les champs");
     } else {
         await logIn(data.value);
-        router.push('/accueil');
     }
 }
 

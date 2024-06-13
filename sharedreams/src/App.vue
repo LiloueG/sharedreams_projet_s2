@@ -5,7 +5,9 @@ import { pb } from '@/assets/backend';
 import LoadingScreen from './components/LoadingScreen.vue';
 
 const router = useRouter();
-const isLoading = ref(true); 
+const isLoading = ref(true);
+
+
 
 onMounted(() => {
   const redirectTo = pb.authStore.isValid ? '/accueil' : '/nuage';
