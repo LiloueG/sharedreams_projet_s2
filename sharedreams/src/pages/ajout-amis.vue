@@ -43,7 +43,7 @@ const searchUsers = async () => {
             </div>
         </div>
         <form @submit.prevent="searchUsers" class="relative mt-6">
-            <input type="search" v-model="searchQuery" class="w-full font-light placeholder:text-zinc-500 px-4 py-2 border-zync-500 rounded-xl bg-white/20 pl-12" placeholder="Rechercher des utilisateurs..."/>
+            <input type="search" v-model="searchQuery" class="w-full font-light placeholder:text-zinc-400 px-4 py-2 rounded-full bg-white/20 pl-12" placeholder="Rechercher des utilisateurs..."/>
             <div class="absolute inset-y-0 left-0 flex items-center pl-3"> 
                 <search />
             </div> 

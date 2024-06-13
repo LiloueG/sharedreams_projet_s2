@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import Together from 'together-ai';
 import retour from '@/components/icons/retour.vue';
+import send from '@/components/icons/send-2.vue';
 
 // Initialisation de l'API Together AI
 const together = new Together({
@@ -100,9 +101,11 @@ const Acheter = () => {
         </div>
       </div>
       <div class="flex-none fixed bottom-12 w-full pr-8">
-        <div class="flex">
-          <input v-model="newMessage" placeholder="Votre message..." @keyup.enter="sendMessage" class="p-2 rounded-l-lg text-black w-full" />
-          <button @click="sendMessage" class="p-2 bg-violet-700 text-white rounded-r-lg">Envoyer</button>
+        <div class="flex items-center">
+          <input v-model="newMessage" placeholder="Votre message..." @keyup.enter="sendMessage" class="p-3 pl-5 rounded-full text-black w-full" />
+          <button @click="sendMessage" class="absolute bg-orange-400 text-white p-2 right-9 rounded-full">
+            <send />
+          </button>
         </div>
       </div>
     </div>
@@ -114,6 +117,7 @@ const Acheter = () => {
           <h2 class="text-center text-xl font-semibold mb-6">
             Débloquez toutes les fonctionnalités de l'application avec un abonnement de seulement 2,99€ par mois.
           </h2>
+          
           <div class="bg-violet-950 rounded-lg shadow-lg overflow-hidden">
             <div class="flex justify-between p-4 border-b border-gray-700">
               <div class="w-1/2 text-center">

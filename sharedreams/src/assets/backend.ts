@@ -314,6 +314,8 @@ export const fetchData = async () => {
     }
 }
 
+
+
 export async function addComment(dreamId: string, content: string): Promise<CommentsResponse> {
     if (!pb.authStore.isValid) {
         throw new Error("User not authenticated");

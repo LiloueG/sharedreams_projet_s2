@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 import { getComments, addComment } from '@/assets/backend';
 import type { CommentsResponse } from '@/pocketbase-types';
 import retour from '@/components/icons/retour.vue';
+import send from '@/components/icons/send-2.vue';
 
 const route = useRoute();
 const dreamId = route.params.id as string;
@@ -43,22 +44,17 @@ console.log(comments);
     <div class="comments-page px-4 py-12 min-h-screen">
         <div class="flex justify-between">
             <div class="flex gap-3">
-                <RouterLink to="/amis">
+                <RouterLink to="/accueil">
                     <retour />
                 </RouterLink>
                 <h1 class="font-Marigny text-2xl font-bold">Commentaires</h1>
             </div>
         </div>
 
-        <form @submit.prevent="postComment" class="relative mt-6">
-            <input
-                v-model="newComment"
-                type="text"
-                class="w-full font-light placeholder:text-zinc-500 px-4 py-2 border-zinc-500 rounded-xl bg-white/20 pl-12"
-                placeholder="Écrire un commentaire..."
-            />
-            <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">
-                Publier
+        <form @submit.prevent="postComment" class="relative mt-6 flex items-center ">
+            <input v-model="newComment" type="text" class="w-full font-light placeholder:text-zinc-500 px-5 py-3 border-zinc-500 rounded-full bg-white/20 " placeholder="Écrire un commentaire..." />
+            <button type="submit" class="absolute bg-orange-400 text-white p-2 right-1 rounded-full">
+                <send />
             </button>
         </form>
 

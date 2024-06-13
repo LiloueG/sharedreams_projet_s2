@@ -27,7 +27,7 @@ console.log(typeof friends[0].expand)
             </RouterLink>
         </div>
         <form class="relative mt-6">
-            <input type="search" class="w-full font-light placeholder:text-zinc-500 px-4 py-2 border-zync-500 rounded-xl bg-white/20 pl-12" placeholder="Rechercher des utilisateurs..."/>
+            <input type="search" class="w-full font-light placeholder:text-zinc-400 px-4 py-2 border-zync-500 rounded-full bg-white/20 pl-12" placeholder="Rechercher des amis..."/>
             <div class="absolute inset-y-0 left-0 flex items-center pl-3"> 
                 <search />
             </div> 

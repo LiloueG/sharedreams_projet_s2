@@ -15,13 +15,15 @@ const del = async () => {
 </script>
 
 <template>
-    <div class="flex gap-4 mt-6 bg-white/20 rounded-xl px-6 py-4 items-center">
-        <ImgProfil :record="props" :filename="props.avatar" class="w-11 h-11 rounded-full"/>
-        <div class="w-full flex justify-between items-center">
-            <div>
-                <p class="font-Marigny font-bold text-xl">{{ props.username }}</p>
+    <div class="mt-6">
+        <div class="flex gap-3 mb-3 bg-white/20 rounded-xl px-6 py-4 items-center">
+            <ImgProfil :record="props" :filename="props.avatar" class="w-11 h-11 rounded-full"/>
+            <div class="w-full flex justify-between items-center">
+                <div>
+                    <p class="font-Marigny font-bold text-xl">{{ props.username }}</p>
+                </div>
+                <Benne @click="del" />
             </div>
-            <Benne @click="del" />
-        </div>   
+        </div>
     </div>
 </template>

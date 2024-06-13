@@ -10,11 +10,12 @@ import Sad from '@/components/icons/sad.vue';
 import Tired from '@/components/icons/tired.vue';
 import Happy from '@/components/icons/happy.vue';
 import Scared from '@/components/icons/scared.vue';
-import { UpdateLike } from '@/assets/backend';
+import { UpdateLike, getComments } from '@/assets/backend';
 import { pb } from '@/assets/backend';
 
-
 const props = defineProps<DreamsResponse>()
+
+
 
 
 function convertirEnTempsEcoulé(heureDonnée) {
@@ -85,11 +86,23 @@ async function toggleLove() {
         likes.value -= 1
         likes.value = await UpdateLike(props.id, false)
     }
-    isLike.value = !isLike.value
-
-    
+    isLike.value = !isLike.value   
 }
 
+
+const comments = ref([])
+
+const fetchComments = async () => {
+    try {
+        comments.value = await getComments(props.id)
+    } catch (error) {
+        console.error('Error fetching comments:', error)
+    }
+}
+
+onMounted(() => {
+    fetchComments()
+})
 
 </script>
 
@@ -116,7 +129,10 @@ async function toggleLove() {
                 <span class="text-white">{{ likes.length }}</span>
             </div>
             <RouterLink :to="'comment/' + props.id">
-                <commentaire />
+                <div class="flex gap-2">
+                    <commentaire />
+                    <span>{{ comments.length }}</span>
+                </div>
             </RouterLink> 
         </div>
     </div>
