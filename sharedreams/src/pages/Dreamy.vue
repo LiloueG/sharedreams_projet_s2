@@ -6,7 +6,7 @@ import send from '@/components/icons/send-2.vue';
 
 // Initialisation de l'API Together AI
 const together = new Together({
-  apiKey: 'de8d9d62faafd6bd630b77f39a39ecb256858171be50f93917021b5cb35195bc',
+  apiKey: '250f2b1a0c51d6eafe13b11be2a721feaa526d797cd3813940231485a56dbcce',
 });
 
 // Références pour stocker les messages et le nouveau message

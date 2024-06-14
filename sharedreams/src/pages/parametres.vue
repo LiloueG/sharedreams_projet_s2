@@ -11,6 +11,7 @@ import deconnexion from '@/components/icons/logout.vue';
 import retour from '@/components/icons/retour.vue';
 import { logout } from '@/assets/backend';
 import { useRouter } from 'vue-router';
+import apropos from '@/components/icons/apropos.vue';
 
 const router = useRouter();
 const showModal = ref(false);
@@ -67,10 +68,14 @@ const Acheter = () => {
                 <themes />
                 <p>Thèmes</p>
             </div>
-            <div class="flex gap-3 cursor-pointer" @click="showPremiumPopup">
+            <div class="flex gap-3 mb-9 cursor-pointer" @click="showPremiumPopup">
                 <premium />
                 <p>Premium</p>
             </div>
+            <RouterLink to="/a-propos" class="flex gap-3 items-center">
+                <apropos class="w-8 h-8"/>
+                <p>À propos de nous</p>
+            </RouterLink>
         </div>
         <div class="bg-purple-950 mt-7 p-5 rounded-xl">
             <div class="flex gap-3 mb-9">
